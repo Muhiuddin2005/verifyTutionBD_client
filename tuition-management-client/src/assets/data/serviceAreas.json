@@ -1,0 +1,90 @@
+[
+  {
+    "division": "Dhaka",
+    "district": "Dhaka",
+    "covered_zones": ["Uttara", "Dhanmondi", "Mirpur", "Gulshan", "Mohammadpur"],
+    "active_tutors": 1250,
+    "top_subjects": ["Math", "Physics", "English"],
+    "coordinates": { "lat": 23.8103, "lng": 90.4125 }
+  },
+  {
+    "division": "Dhaka",
+    "district": "Gazipur",
+    "covered_zones": ["Tongi", "Kaliakair", "Sreepur"],
+    "active_tutors": 320,
+    "top_subjects": ["Chemistry", "Biology"],
+    "coordinates": { "lat": 23.9999, "lng": 90.4203 }
+  },
+  {
+    "division": "Chattogram",
+    "district": "Chattogram",
+    "covered_zones": ["Pahartali", "Kotwali", "Halishahar", "Panchlaish"],
+    "active_tutors": 850,
+    "top_subjects": ["Accounting", "Higher Math", "English"],
+    "coordinates": { "lat": 22.3569, "lng": 91.8123 }
+  },
+  {
+    "division": "Chattogram",
+    "district": "Cumilla",
+    "covered_zones": ["Laksam", "Debidwar", "Chandina"],
+    "active_tutors": 410,
+    "top_subjects": ["ICT", "Physics", "Chemistry"],
+    "coordinates": { "lat": 23.4573, "lng": 91.1809 }
+  },
+  {
+    "division": "Sylhet",
+    "district": "Sylhet",
+    "covered_zones": ["Zindabazar", "Ambarkhana", "Dargah Gate", "South Surma"],
+    "active_tutors": 530,
+    "top_subjects": ["English", "General Science"],
+    "coordinates": { "lat": 24.8949, "lng": 91.8662 }
+  },
+  {
+    "division": "Rajshahi",
+    "district": "Rajshahi",
+    "covered_zones": ["Boalia", "Rajpara", "Motihar", "Shah Makhdum"],
+    "active_tutors": 620,
+    "top_subjects": ["Biology", "Chemistry", "Math"],
+    "coordinates": { "lat": 24.3745, "lng": 88.6087 }
+  },
+  {
+    "division": "Rajshahi",
+    "district": "Naogaon",
+    "covered_zones": ["Manda", "Sapahar", "Porsha", "Patnitala"],
+    "active_tutors": 210,
+    "top_subjects": ["Bangla", "English", "Math"],
+    "coordinates": { "lat": 24.8236, "lng": 88.9300 }
+  },
+  {
+    "division": "Khulna",
+    "district": "Khulna",
+    "covered_zones": ["Sonadanga", "Khalishpur", "Daulatpur", "Shib Bari"],
+    "active_tutors": 480,
+    "top_subjects": ["Physics", "Math", "ICT"],
+    "coordinates": { "lat": 22.8456, "lng": 89.5672 }
+  },
+  {
+    "division": "Barisal",
+    "district": "Barisal",
+    "covered_zones": ["Band Road", "Kawnia", "Rupatali", "Nathullabad"],
+    "active_tutors": 310,
+    "top_subjects": ["English", "Accounting"],
+    "coordinates": { "lat": 22.7000, "lng": 90.3667 }
+  },
+  {
+    "division": "Rangpur",
+    "district": "Rangpur",
+    "covered_zones": ["Jahaj Company", "Pairaband", "Mahiganj", "Lalbagh"],
+    "active_tutors": 390,
+    "top_subjects": ["Chemistry", "Physics", "Biology"],
+    "coordinates": { "lat": 25.7460, "lng": 89.2752 }
+  },
+  {
+    "division": "Mymensingh",
+    "district": "Mymensingh",
+    "covered_zones": ["Trishal", "Muktagachha", "Bhaluka"],
+    "active_tutors": 450,
+    "top_subjects": ["Math", "General Science", "ICT"],
+    "coordinates": { "lat": 24.7539, "lng": 90.3987 }
+  }
+]
