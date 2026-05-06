@@ -1,14 +1,63 @@
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import SocialLogin from '../SocialLogin/SocialLogin';
+import useAuth from '../../../hooks/useAuth';
+import Swal from 'sweetalert2';
+import axios from 'axios';
+
+const image_hosting_key = import.meta.env.VITE_image_host_key;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const Register = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const location = useLocation();
     const navigate = useNavigate();
+    const { registerUser, updateUserProfile } = useAuth();
 
-    const handleRegistration = (data) => {
-        console.log('Registration form data:', data);
+    const handleRegistration = async (data) => {
+        try {
+            // Upload image to ImgBB
+            const imageFile = new FormData();
+            imageFile.append('image', data.photo[0]);
+
+            const res = await axios.post(image_hosting_api, imageFile, {
+                headers: {
+                    'content-type': 'multipart/form-data'
+                }
+            });
+
+            if (res.data.success) {
+                const photoURL = res.data.data.display_url;
+
+                registerUser(data.email, data.password)
+                    .then(() => {
+                        updateUserProfile({ displayName: data.name, photoURL: photoURL })
+                            .then(() => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Account Created Successfully!',
+                                    text: 'Profile updated with Institution ID card.',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                                navigate(location.state || '/');
+                            })
+                            .catch(error => {
+                                console.log("Profile update error:", error);
+                                Swal.fire({ icon: 'error', title: 'Profile Update Failed', text: error.message });
+                            });
+                    })
+                    .catch(error => {
+                        console.log(error);
+                        Swal.fire({ icon: 'error', title: 'Registration Failed', text: error.message });
+                    });
+            } else {
+                Swal.fire({ icon: 'error', title: 'Image Upload Failed', text: 'Could not upload ID card.' });
+            }
+        } catch (error) {
+            console.error("Registration error:", error);
+            Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong during registration.' });
+        }
     };
 
     return (
@@ -35,9 +84,9 @@ const Register = () => {
                     </div>
 
                     <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Profile Photo</span></label>
+                        <label className="label"><span className="label-text font-medium">Institution ID Card</span></label>
                         <input type="file" {...register('photo', { required: true })} className="file-input file-input-bordered w-full focus:outline-primary" accept="image/*" />
-                        {errors.photo && <p className='text-error text-sm mt-1'>Photo is required.</p>}
+                        {errors.photo && <p className='text-error text-sm mt-1'>Institution ID card is required.</p>}
                     </div>
 
                     <div className="form-control">
@@ -63,7 +112,7 @@ const Register = () => {
                 </form>
                 
                 <p className="text-center text-sm mt-4">
-                    Already have an account? <Link state={location.state} className='text-primary font-bold hover:underline' to="/login">Log In</Link>
+                    Already have an account? <Link state={location.state} className='text-primary font-bold hover:underline' to="/auth/login">Log In</Link>
                 </p>
             </div>
             <SocialLogin />

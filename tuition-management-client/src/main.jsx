@@ -1,35 +1,19 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from "react-router";
-import './index.css'
-import RootLayout from './layouts/RootLayout.jsx';
-import Home from './pages/Home/Home.jsx';
-import Coverage from './pages/Coverage/Coverage.jsx';
-import AuthLayout from './layouts/AuthLayout.jsx';
-import Login from './pages/Auth/Login/Login.jsx';
-import Register from './pages/Auth/Register/Register.jsx';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider } from "react-router";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import './index.css';
+import { router } from './routes/router.jsx';
+import AuthProvider from './contexts/AuthContext/AuthProvider.jsx';
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    Component: RootLayout,
-    children: [
-      { index: true, element: <Home /> },
-      { path: "coverage", element: <Coverage /> }
-    ]
-  },
-  {
-    path: "/auth",
-    Component: AuthLayout,
-    children: [
-      { path: "login", element: <Login /> },
-      { path: "register", element: <Register /> }
-    ]
-  }
-]);
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-      <RouterProvider router={router} />
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
-)
+);
