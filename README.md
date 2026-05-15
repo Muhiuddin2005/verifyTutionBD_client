@@ -1,16 +1,24 @@
-# React + Vite
+# verifyTutionBD
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Purpose
+The Tuition Management System is a complete platform designed to bridge the gap between students and qualified tutors. It automates workflows for posting tuition requirements, processing tutor applications, handling secure payments, and tracking platform activity.
 
-Currently, two official plugins are available:
+## Features
+* **Role-Based Dashboards:** Dedicated portals for Students, Tutors, and Admins.
+* **Authentication:** Secure Email/Password and Google Social Login via Firebase.
+* **Tuition Management:** Students can post, edit, and delete tuitions. Admins moderate posts before they go live.
+* **Application System:** Tutors can apply to tuitions with their qualifications and expected salary.
+* **Secure Payments:** Integrated Stripe checkout for hiring tutors.
+* **Search & Filters:** Advanced sorting and filtering for finding the perfect tuition or tutor.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live URL
+[Insert Live Project URL Here]
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Technologies & Packages Used
+* **Frontend:** React, Vite, Tailwind CSS, DaisyUI, Framer Motion
+* **Routing & State:** React Router, TanStack React Query
+* **Forms & API:** React Hook Form, Axios
+* **Authentication:** Firebase
+* **Mapping:** Leaflet, React Leaflet
+* **Alerts & Icons:** SweetAlert2, React Icons
+* **Backend:** Node.js, Express.js, MongoDB, Stripe API, Firebase Admin SDK
