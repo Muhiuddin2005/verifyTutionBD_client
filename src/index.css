@@ -2,22 +2,20 @@
 @import "tailwindcss";
 
 @plugin "daisyui/index.js" {
-   themes: light, dark; /* Enable both themes */
+  themes: light, dark;
 };
 
-/* Custom Colors for Light Theme */
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #CAEB66;
-  --color-secondary: #03373D;
+  --color-primary: #4DB04F;
+  --color-secondary: #1B416B;
 }
 
-/* Custom Colors for Dark Theme */
 @plugin "daisyui/theme/index.js" {
   name: "dark";
-  --color-primary: #CAEB66;
-  --color-secondary: #03373D;
+  --color-primary: #4DB04F;
+  --color-secondary: #1B416B;
 }
 
 body {
