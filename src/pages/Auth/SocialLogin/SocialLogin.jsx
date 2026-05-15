@@ -2,18 +2,21 @@ import { useLocation, useNavigate } from 'react-router';
 import useAuth from '../../../hooks/useAuth';
 import { FcGoogle } from 'react-icons/fc';
 import Swal from 'sweetalert2';
+import useAxiosPublic from '../../../hooks/useAxiosPublic';
 
 const SocialLogin = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { signInGoogle } = useAuth();
+    const axiosPublic = useAxiosPublic();
+
+    const from = location.state?.from?.pathname || '/';
 
     const handleGoogleSignIn = () => {
         signInGoogle()
             .then(result => {
                 console.log("Google User:", result.user);
                 
-                // create user in the database (Default role "Student" as per requirements)
                 const userInfo = {
                     email: result.user.email,
                     name: result.user.displayName,
@@ -21,14 +24,15 @@ const SocialLogin = () => {
                     role: 'student' 
                 };
 
-                // TODO: Save to MongoDB using axiosPublic
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Login Successful',
-                    showConfirmButton: false,
-                    timer: 1500
+                axiosPublic.post('/users', userInfo).then(() => {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Login Successful',
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    navigate(from, { replace: true });
                 });
-                navigate(location.state || '/');
             })
             .catch(error => {
                 console.log(error);
