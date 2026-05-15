@@ -9,6 +9,7 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { signInUser } = useAuth();
+    const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (data) => {
         signInUser(data.email, data.password)
@@ -20,7 +21,7 @@ const Login = () => {
                     showConfirmButton: false,
                     timer: 1500
                 });
-                navigate(location?.state || '/');
+                navigate(from, { replace: true });
             })
             .catch(error => {
                 console.log(error);

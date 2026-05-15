@@ -41,12 +41,26 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, profile);
     };
 
-    // Observe user state
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser);
-            setLoading(false);
             console.log("Current User:", currentUser);
+            
+            if (currentUser) {
+                currentUser.getIdToken()
+                    .then((token) => {
+                        localStorage.setItem('access-token', token);
+                        setLoading(false);
+                    })
+                    .catch((error) => {
+                        console.error('Error getting ID token:', error);
+                        localStorage.removeItem('access-token');
+                        setLoading(false);
+                    });
+            } else {
+                localStorage.removeItem('access-token');
+                setLoading(false);
+            }
         });
         
         return () => {
