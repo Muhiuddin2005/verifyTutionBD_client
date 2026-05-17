@@ -24,7 +24,6 @@ const NavBar = () => {
     const links = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/coverage">Coverage</NavLink></li>
             <li><NavLink to="/tuitions">Tuitions</NavLink></li>
             <li><NavLink to="/tutors">Tutors</NavLink></li>
             <li><NavLink to="/about">About</NavLink></li>
