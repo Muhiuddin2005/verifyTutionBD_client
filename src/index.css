@@ -27,6 +27,20 @@
   --color-base-content: #F8FAFC;
 }
 
+/* Enforce custom primary and secondary colors over default DaisyUI themes (Specificity bugfix) */
+:root,
+[data-theme="light"],
+:root:has(input.theme-controller[value=light]:checked) {
+  --color-primary: #0047AB !important;
+  --color-secondary: #4DB04F !important;
+}
+
+[data-theme="dark"],
+:root:has(input.theme-controller[value=dark]:checked) {
+  --color-primary: #0047AB !important;
+  --color-secondary: #4DB04F !important;
+}
+
 body {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
