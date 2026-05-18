@@ -35,7 +35,6 @@ const WhyChooseUs = () => {
                             key={`${feature.id}-${index}`}
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
-                            {/* Responsive sizes: w-[280px] h-52 for mobile, scaling up to w-96 h-64 for desktop */}
                             className="w-[280px] sm:w-80 md:w-96 h-52 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/5 cursor-pointer flex-shrink-0 bg-base-200/50 flex items-center justify-center p-2"
                         >
                             {/* CHANGED: object-cover to object-contain so the image is NEVER cut off */}
