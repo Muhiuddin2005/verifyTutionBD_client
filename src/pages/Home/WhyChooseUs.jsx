@@ -7,27 +7,6 @@ const features = [
     { id: 4, img: '/c4.png', title: 'Admin Mediation', desc: 'Our admin team monitors the system to quickly resolve any disputes.' }
 ];
 
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.2 }
-    }
-};
-
-const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: {
-        opacity: 1, 
-        y: 0,
-        transition: { duration: 0.6, ease: "easeOut" }
-    },
-    hover: { 
-        scale: 1.05, 
-        transition: { duration: 0.3 } 
-    }
-};
-
 const WhyChooseUs = () => {
     return (
         <section className="py-20 overflow-hidden">
@@ -45,30 +24,34 @@ const WhyChooseUs = () => {
                 </p>
             </div>
 
-            <motion.div 
-                variants={containerVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
-            >
-                {features.map((feature) => (
-                    <motion.div 
-                        key={feature.id}
-                        variants={cardVariants}
-                        whileHover="hover"
-                        className="card bg-base-100 shadow-xl border border-base-200 cursor-pointer overflow-hidden"
-                    >
-                        <figure className="h-48 w-full bg-base-200">
-                            <img src={feature.img} alt={feature.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                        </figure>
-                        <div className="card-body items-center text-center p-6">
-                            <h3 className="card-title text-xl mb-2">{feature.title}</h3>
-                            <p className="text-sm text-base-content/70">{feature.desc}</p>
-                        </div>
-                    </motion.div>
-                ))}
-            </motion.div>
+            <div className="relative w-full overflow-hidden py-10 px-4">
+                {/* Gradient overlays for smooth fading edges */}
+                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-base-100 to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-base-100 to-transparent z-10 pointer-events-none"></div>
+                
+                <motion.div 
+                    className="flex gap-8 w-max"
+                    animate={{ x: ["0%", "-50%"] }}
+                    transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+                >
+                    {[...features, ...features].map((feature, index) => (
+                        <motion.div 
+                            key={`${feature.id}-${index}`}
+                            whileHover={{ scale: 1.05, y: -10 }}
+                            transition={{ duration: 0.3 }}
+                            className="card w-80 md:w-96 bg-base-100 shadow-xl border border-base-200 cursor-pointer overflow-hidden flex-shrink-0"
+                        >
+                            <figure className="h-56 w-full bg-base-200">
+                                <img src={feature.img} alt={feature.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                            </figure>
+                            <div className="card-body items-center text-center p-6">
+                                <h3 className="card-title text-xl mb-2">{feature.title}</h3>
+                                <p className="text-sm text-base-content/70">{feature.desc}</p>
+                            </div>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
         </section>
     );
 };

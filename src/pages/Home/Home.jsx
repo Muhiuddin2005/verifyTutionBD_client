@@ -30,15 +30,31 @@ const Home = () => {
 
     return (
         <div>
-            <div className="hero min-h-[70vh] bg-base-200 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10 z-0"></div>
-                <div className="hero-content text-center z-10">
-                    <div className="max-w-2xl">
+            <div className="hero min-h-[70vh] bg-base-300 relative overflow-hidden">
+                <div className="absolute inset-0 z-0 flex overflow-hidden opacity-40 pointer-events-none items-center">
+                    <motion.div
+                        className="flex w-max"
+                        animate={{ x: ["0%", "-50%"] }}
+                        transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+                    >
+                        {[1, 2].map((group) => (
+                            <div key={group} className="flex h-[70vh]">
+                                {["/b1.webp", "/b2.webp", "/b3.webp", "/b4.webp"].map((src, index) => (
+                                    <img key={index} src={src} className="h-full w-[100vw] sm:w-[50vw] md:w-[33vw] lg:w-[25vw] object-cover p-1" alt="Background Slide" />
+                                ))}
+                            </div>
+                        ))}
+                    </motion.div>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-base-100 via-base-100/40 to-base-100 z-0 pointer-events-none"></div>
+                
+                <div className="hero-content text-center z-10 relative bg-base-100/70 backdrop-blur-lg rounded-[3rem] p-12 border border-base-200 shadow-2xl mt-8 mb-8">
+                    <div className="max-w-3xl">
                         <motion.h1 
                             initial={{ opacity: 0, y: -50 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.8 }}
-                            className="mb-5 text-6xl font-bold text-primary drop-shadow-sm"
+                            className="mb-6 text-5xl md:text-7xl font-bold text-primary drop-shadow-sm"
                         >
                             Elevate Your Learning
                         </motion.h1>
@@ -46,7 +62,7 @@ const Home = () => {
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}
                             transition={{ duration: 1, delay: 0.4 }}
-                            className="mb-8 text-xl text-base-content/80"
+                            className="mb-10 text-xl md:text-2xl font-medium text-base-content/90"
                         >
                             Connect with verified tutors in your area, or post a tuition request to find the perfect match for your educational needs.
                         </motion.p>
@@ -54,9 +70,10 @@ const Home = () => {
                             initial={{ scale: 0.8, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{ duration: 0.5, delay: 0.8 }}
+                            className="flex flex-col sm:flex-row justify-center gap-4"
                         >
-                            <Link to="/tuitions" className="btn btn-primary text-secondary btn-lg mr-4 shadow-lg shadow-primary/30">Find Tuitions</Link>
-                            <Link to="/tutors" className="btn btn-outline btn-primary btn-lg">Browse Tutors</Link>
+                            <Link to="/tuitions" className="btn btn-primary text-secondary btn-lg shadow-xl shadow-primary/20 hover:scale-105 transition-transform">Find Tuitions</Link>
+                            <Link to="/tutors" className="btn btn-primary text-secondary btn-lg shadow-xl shadow-primary/20 hover:scale-105 transition-transform">Browse Tutors</Link>
                         </motion.div>
                     </div>
                 </div>
