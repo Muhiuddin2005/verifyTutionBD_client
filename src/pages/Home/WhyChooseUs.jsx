@@ -10,16 +10,6 @@ const features = [
 const WhyChooseUs = () => {
     return (
         <section className="py-20 overflow-hidden bg-base-100">
-            <div className="text-center mb-12">
-                <motion.h2 
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-4xl font-bold mb-4 text-primary"
-                >
-                    Why Choose verifyTutionBD?
-                </motion.h2>
-            </div>
 
             <div className="relative w-full overflow-hidden py-6 px-4">
                 <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-base-100 to-transparent z-10 pointer-events-none"></div>
