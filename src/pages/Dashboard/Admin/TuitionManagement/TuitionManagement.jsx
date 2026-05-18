@@ -44,8 +44,8 @@ const TuitionManagement = () => {
                                 <td className="font-medium">{tuition.title}</td>
                                 <td>{tuition.studentEmail}</td>
                                 <td>
-                                    <span className={`badge ${tuition.status === 'approved' ? 'badge-success' : tuition.status === 'rejected' ? 'badge-error' : 'badge-warning'} badge-outline font-bold text-gray-900`}>
-                                        {tuition.status.toUpperCase()}
+                                    <span className={`status-badge status-${tuition.status}`}>
+                                        {tuition.status}
                                     </span>
                                 </td>
                                 <td className="flex gap-2">

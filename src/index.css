@@ -26,44 +26,35 @@ body {
   font-style: normal;
 }
 
-/* Global button text color override */
-button,
-.btn {
-  color: #0047AB;
+/* --- GLOBAL BUTTON OVERRIDE --- */
+/* Forces all primary buttons to have white text, overriding text-secondary */
+@layer components {
+  .btn-primary {
+    color: #ffffff !important;
+  }
+  .btn-info, .btn-success, .btn-error {
+    color: #ffffff !important;
+  }
 }
 
-button:hover,
-.btn:hover {
-  color: #002D62;
+/* --- LOGICAL DASHBOARD STATUS BADGES --- */
+/* Use these classes instead of DaisyUI's badge-success/badge-error */
+.status-badge {
+    @apply px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border inline-block text-center;
 }
 
-/* Approved Status */
 .status-approved {
-  background-color: #DEF7EC;
-  color: #03543F;
-  border: 1px solid #C3E6CB;
+    @apply bg-green-100 text-green-700 border-green-300;
 }
 
-/* Failed/Field Status */
-.status-failed,
-.status-field {
-  background-color: #FEE2E2;
-  color: #991B1B;
-  border: 1px solid #F8D7DA;
-}
-
-/* Pending Status */
 .status-pending {
-  background-color: #FEF3C7;
-  color: #92400E;
-  border: 1px solid #FFEBAA;
+    @apply bg-yellow-100 text-yellow-700 border-yellow-300;
 }
 
-/* Common status pill styling */
-.status-pill {
-  padding: 4px 12px;
-  border-radius: 9999px;
-  font-weight: 600;
-  font-size: 0.8rem;
-  display: inline-block;
+.status-rejected {
+    @apply bg-red-100 text-red-700 border-red-300;
+}
+
+.status-filled {
+    @apply bg-blue-100 text-blue-700 border-blue-300;
 }

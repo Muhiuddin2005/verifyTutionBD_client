@@ -78,7 +78,7 @@ const MyApplications = () => {
                                 <td className="font-medium">{app.tuition?.title}</td>
                                 <td>{app.tuition?.studentName}</td>
                                 <td>
-                                    <span className={`badge ${app.status === 'approved' ? 'badge-success' : app.status === 'rejected' ? 'badge-error' : 'badge-warning'} badge-outline font-semibold`}>
+                                    <span className={`status-badge status-${app.status}`}>
                                         {app.status}
                                     </span>
                                 </td>

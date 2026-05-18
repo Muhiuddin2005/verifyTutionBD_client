@@ -77,7 +77,7 @@ const MyTuitions = () => {
                                 <td>{tuition.subject}</td>
                                 <td>৳ {tuition.budget}</td>
                                 <td>
-                                    <span className={`badge ${tuition.status === 'approved' ? 'badge-success' : tuition.status === 'rejected' ? 'badge-error' : 'badge-warning'} badge-outline font-semibold`}>
+                                    <span className={`status-badge status-${tuition.status}`}>
                                         {tuition.status}
                                     </span>
                                 </td>

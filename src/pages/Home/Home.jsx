@@ -1,13 +1,24 @@
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import WhyChooseUs from './WhyChooseUs';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
-import NewBanner from '../../components/NewBanner';
+
+const bannerImages = ["/b1.webp", "/b2.webp", "/b3.webp", "/b4.webp"];
 
 const Home = () => {
     const axiosPublic = useAxiosPublic();
+    const [currentImage, setCurrentImage] = useState(0);
+
+    // Auto-slide effect for the new banner
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setCurrentImage((prev) => (prev + 1) % bannerImages.length);
+        }, 5000);
+        return () => clearInterval(timer);
+    }, []);
 
     const { data: latestTuitions = [], isLoading: loadingTuitions } = useQuery({
         queryKey: ['latest-tuitions'],
@@ -31,23 +42,41 @@ const Home = () => {
 
     return (
         <div>
-            <section className="banner-section">
-                <NewBanner />
-            </section>
+            {/* 1. New Framer Motion Sliding Banner (No text, no buttons) */}
+            <div className="relative w-full h-[75vh] overflow-hidden bg-base-300">
+                <AnimatePresence mode="wait">
+                    <motion.img
+                        key={currentImage}
+                        src={bannerImages[currentImage]}
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.2, ease: "easeInOut" }}
+                        className="absolute inset-0 w-full h-full object-cover"
+                        alt={`Banner ${currentImage + 1}`}
+                    />
+                </AnimatePresence>
+                {/* Gradient overlay for a smooth blend with the page body */}
+                <div className="absolute inset-0 bg-gradient-to-b from-base-100/30 via-transparent to-base-100 pointer-events-none"></div>
+            </div>
 
+            {/* Note: The 4 static images section has been completely removed from here */}
+
+            {/* 2. Why Choose Us Section */}
             <WhyChooseUs />
 
-            <div className="bg-base-200 py-24">
+            {/* Latest Tuitions Section (Margin/Padding polished) */}
+            <div className="bg-base-200 py-20">
                 <div className="max-w-7xl mx-auto px-4">
-                    <div className="flex justify-between items-end mb-12">
+                    <div className="flex justify-between items-end mb-10">
                         <div>
-                            <h2 className="text-4xl font-bold text-primary mb-4">Latest Tuitions</h2>
+                            <h2 className="text-4xl font-bold text-primary mb-3">Latest Tuitions</h2>
                             <p className="text-base-content/70">Fresh opportunities waiting for talented tutors.</p>
                         </div>
                         <Link to="/tuitions" className="btn btn-outline btn-primary">View All</Link>
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {latestTuitions?.map(tuition => (
                             <div key={tuition._id} className="card bg-base-100 shadow-lg border border-base-200">
                                 <div className="card-body">
@@ -61,8 +90,8 @@ const Home = () => {
                                         <div className="flex items-center gap-2"><span>💰 Budget:</span> ৳ {tuition.budget}/mo</div>
                                     </div>
 
-                                    <div className="card-actions justify-end mt-4">
-                                        <Link to={`/tuitions/${tuition._id}`} className="btn btn-primary text-secondary w-full">
+                                    <div className="card-actions justify-end mt-6">
+                                        <Link to={`/tuitions/${tuition._id}`} className="btn btn-primary w-full">
                                             View Details
                                         </Link>
                                     </div>
@@ -73,16 +102,17 @@ const Home = () => {
                 </div>
             </div>
 
-            <div className="max-w-7xl mx-auto px-4 py-24">
-                <div className="flex justify-between items-end mb-12">
+            {/* Featured Tutors Section (Margin/Padding polished) */}
+            <div className="max-w-7xl mx-auto px-4 py-20">
+                <div className="flex justify-between items-end mb-10">
                     <div>
-                        <h2 className="text-4xl font-bold text-primary mb-4">Featured Tutors</h2>
+                        <h2 className="text-4xl font-bold text-primary mb-3">Featured Tutors</h2>
                         <p className="text-base-content/70">Meet some of our top verified educators.</p>
                     </div>
                     <Link to="/tutors" className="btn btn-outline btn-primary">View All Tutors</Link>
                 </div>
                 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                     {latestTutors.map(tutor => (
                         <div key={tutor._id} className="card bg-base-100 shadow-xl border border-base-200 text-center">
                             <figure className="px-10 pt-10">

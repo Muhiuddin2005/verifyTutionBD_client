@@ -74,7 +74,7 @@ const AppliedTutors = () => {
                                     <div className="text-xs opacity-70">৳ {app.tuition?.budget}</div>
                                 </td>
                                 <td>
-                                    <span className={`badge ${app.status === 'approved' ? 'badge-success' : app.status === 'rejected' ? 'badge-error' : 'badge-warning'} badge-outline font-semibold`}>
+                                    <span className={`status-badge status-${app.status}`}>
                                         {app.status}
                                     </span>
                                 </td>
