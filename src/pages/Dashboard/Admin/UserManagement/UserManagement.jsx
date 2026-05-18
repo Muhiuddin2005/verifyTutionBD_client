@@ -118,9 +118,11 @@ const UserManagement = () => {
                                     <td>{user.email}</td>
                                     <td>
                                         <select
-                                            className="select select-sm select-bordered w-full max-w-xs focus:outline-primary"
+                                            className="select select-sm select-bordered w-full max-w-xs focus:outline-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-base-200"
                                             value={user.role}
                                             onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                                            disabled={isOnlyAdmin && isSelf}
+                                            title={(isOnlyAdmin && isSelf) ? "You cannot change your role because you are the only admin" : "Change User Role"}
                                         >
                                             <option value="student">Student</option>
                                             <option value="tutor">Tutor</option>

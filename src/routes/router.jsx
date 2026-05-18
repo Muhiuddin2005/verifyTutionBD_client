@@ -34,9 +34,9 @@ export const router = createBrowserRouter([
             { index: true, element: <Home /> },
             { path: "about", element: <About /> },
             { path: "contact", element: <Contact /> },
-            { path: "tuitions", element: <TuitionsListing /> },
-            { path: "tuitions/:id", element: <TuitionDetails /> },
-            { path: "tutors", element: <TutorsListing /> }
+            { path: "tuitions", element: <PrivateRoute><TuitionsListing /></PrivateRoute> },
+            { path: "tuitions/:id", element: <PrivateRoute><TuitionDetails /></PrivateRoute> },
+            { path: "tutors", element: <PrivateRoute><TutorsListing /></PrivateRoute> }
         ]
     },
     {
