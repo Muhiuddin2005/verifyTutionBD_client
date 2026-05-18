@@ -35,15 +35,17 @@ const WhyChooseUs = () => {
                             key={`${feature.id}-${index}`}
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
-                            /* Responsive width. Height is set to auto so it perfectly wraps the image */
-                            className="w-[260px] sm:w-[320px] md:w-[380px] h-auto rounded-2xl overflow-hidden shadow-xl border border-base-200 cursor-pointer flex-shrink-0 bg-base-100 flex items-center justify-center"
+                            /* Added fixed responsive heights back in (h-48, h-56, h-64) so it has a box to fill */
+                            className="w-[260px] sm:w-[320px] md:w-[380px] h-48 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-xl border border-base-200 cursor-pointer flex-shrink-0 bg-base-100 flex items-center justify-center"
                         >
-                            {/* object-contain and h-auto ensure the image shape is 100% preserved and never cut */}
+                            
+                            {/* Change "object-fill" to "object-cover" here if you want it to crop instead of stretch! */}
                             <img 
                                 src={feature.img} 
                                 alt={`Feature ${feature.id}`} 
-                                className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500" 
+                                className="w-full h-full object-fill hover:scale-105 transition-transform duration-500" 
                             />
+
                         </motion.div>
                     ))}
                 </motion.div>
