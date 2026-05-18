@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router';
 import useAxiosSecure from '../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
@@ -9,9 +9,12 @@ const PaymentSuccess = () => {
     const axiosSecure = useAxiosSecure();
     const navigate = useNavigate();
     const [status, setStatus] = useState('processing');
+    const hasFetched = useRef(false);
 
     useEffect(() => {
+        if (hasFetched.current) return;
         if (sessionId) {
+            hasFetched.current = true;
             axiosSecure.patch(`/payments/payment-success?sessionId=${sessionId}`)
                 .then(res => {
                     if (res.data.success) {
