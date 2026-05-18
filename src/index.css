@@ -9,7 +9,7 @@
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #4F46E5; /* Indigo - Rich, modern primary */
+  --color-primary: #0047AB; /* Indigo - Rich, modern primary */
   --color-secondary: #0EA5E9; /* Sky Blue - Fresh, vibrant secondary */
   --color-base-100: #FFFFFF;
   --color-base-200: #F8FAFC; /* Slightly cooler, softer gray */

@@ -35,9 +35,15 @@ const WhyChooseUs = () => {
                             key={`${feature.id}-${index}`}
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
-                            className="w-80 md:w-96 h-64 rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/5 cursor-pointer flex-shrink-0"
+                            // Added bg-base-200/50 so if the image doesn't perfectly fit the box ratio, the background looks intentionally styled
+                            className="w-80 md:w-96 h-64 rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/5 cursor-pointer flex-shrink-0 bg-base-200/50 flex items-center justify-center p-2"
                         >
-                            <img src={feature.img} alt="Feature" className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                            {/* CHANGED: object-cover to object-contain so the image is NEVER cut off */}
+                            <img 
+                                src={feature.img} 
+                                alt={`Feature ${feature.id}`} 
+                                className="w-full h-full object-contain hover:scale-105 transition-transform duration-500" 
+                            />
                         </motion.div>
                     ))}
                 </motion.div>
