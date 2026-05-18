@@ -9,8 +9,8 @@
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #4F46E5; /* Indigo - Rich, modern primary */
-  --color-secondary: #0EA5E9; /* Sky Blue - Fresh, vibrant secondary */
+  --color-primary: #0047AB; /* Cobalt Blue - Rich primary */
+  --color-secondary: #4DB04F; /* Green - Fresh secondary */
   --color-base-100: #FFFFFF;
   --color-base-200: #F8FAFC; /* Slightly cooler, softer gray */
   --color-base-300: #F1F5F9;
@@ -19,8 +19,8 @@
 
 @plugin "daisyui/theme/index.js" {
   name: "dark";
-  --color-primary: #6366F1;
-  --color-secondary: #38BDF8;
+  --color-primary: #0047AB;
+  --color-secondary: #4DB04F;
   --color-base-100: #0F172A;
   --color-base-200: #1E293B;
   --color-base-300: #334155;
