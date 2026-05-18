@@ -22,11 +22,11 @@ const WhyChooseUs = () => {
             </div>
 
             <div className="relative w-full overflow-hidden py-6 px-4">
-                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-base-100 to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-base-100 to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-r from-base-100 to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-16 md:w-24 bg-gradient-to-l from-base-100 to-transparent z-10 pointer-events-none"></div>
                 
                 <motion.div 
-                    className="flex gap-8 w-max"
+                    className="flex gap-6 md:gap-8 w-max items-center"
                     animate={{ x: ["0%", "-50%"] }}
                     transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
                 >
@@ -35,13 +35,14 @@ const WhyChooseUs = () => {
                             key={`${feature.id}-${index}`}
                             whileHover={{ scale: 1.05 }}
                             transition={{ duration: 0.3 }}
-                            className="w-[280px] sm:w-80 md:w-96 h-52 sm:h-56 md:h-64 rounded-2xl overflow-hidden shadow-2xl border-2 border-primary/5 cursor-pointer flex-shrink-0 bg-base-200/50 flex items-center justify-center p-2"
+                            /* Responsive width. Height is set to auto so it perfectly wraps the image */
+                            className="w-[260px] sm:w-[320px] md:w-[380px] h-auto rounded-2xl overflow-hidden shadow-xl border border-base-200 cursor-pointer flex-shrink-0 bg-base-100 flex items-center justify-center"
                         >
-                            {/* CHANGED: object-cover to object-contain so the image is NEVER cut off */}
+                            {/* object-contain and h-auto ensure the image shape is 100% preserved and never cut */}
                             <img 
                                 src={feature.img} 
                                 alt={`Feature ${feature.id}`} 
-                                className="w-full h-full object-contain hover:scale-105 transition-transform duration-500" 
+                                className="w-full h-auto object-contain hover:scale-105 transition-transform duration-500" 
                             />
                         </motion.div>
                     ))}

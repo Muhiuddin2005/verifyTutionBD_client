@@ -42,22 +42,24 @@ const Home = () => {
 
     return (
         <div>
-            {/* 1. Responsive Framer Motion Sliding Banner */}
-            <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden bg-base-300">
+            {/* 1. New Framer Motion Sliding Banner - ZERO CROPPING */}
+            {/* We use aspect-video for mobile, and a wider aspect ratio for desktop to minimize empty space */}
+            <div className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden bg-base-300 flex items-center justify-center">
                 <AnimatePresence mode="wait">
                     <motion.img
                         key={currentImage}
                         src={bannerImages[currentImage]}
-                        initial={{ opacity: 0, scale: 1.05 }}
+                        initial={{ opacity: 0, scale: 1.02 }}
                         animate={{ opacity: 1, scale: 1 }}
                         exit={{ opacity: 0 }}
                         transition={{ duration: 1.2, ease: "easeInOut" }}
-                        className="absolute inset-0 w-full h-full object-cover"
+                        /* object-contain guarantees the image is NEVER cut. It fits perfectly inside the box. */
+                        className="absolute w-full h-full object-contain drop-shadow-2xl"
                         alt={`Banner ${currentImage + 1}`}
                     />
                 </AnimatePresence>
-                {/* Gradient overlay for a smooth blend with the page body */}
-                <div className="absolute inset-0 bg-gradient-to-b from-base-100/30 via-transparent to-base-100 pointer-events-none"></div>
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-base-100/10 via-transparent to-base-100 pointer-events-none"></div>
             </div>
 
             {/* Note: The 4 static images section has been completely removed from here */}
