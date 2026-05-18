@@ -23,9 +23,7 @@ const AuthLayout = () => {
                 <div className="absolute w-[800px] h-[800px] bg-primary/20 rounded-full blur-3xl -top-20 -right-20"></div>
                 
                 <div className="relative z-10 text-center">
-                    <div className="w-80 h-80 bg-base-300 rounded-3xl shadow-xl flex items-center justify-center mb-8 mx-auto">
-                        <p className="text-base-content/50 font-bold">Illustration Space</p>
-                    </div>
+                    <img src="/auth.webp" alt="Authentication" className="w-[30rem] h-auto max-w-full drop-shadow-2xl rounded-2xl mb-8 mx-auto object-cover" />
                     <h2 className="text-4xl font-bold mb-4">Empowering Education</h2>
                     <p className="text-lg text-base-content/70 max-w-md mx-auto">
                         Join thousands of students and tutors transforming the way learning happens across Bangladesh.

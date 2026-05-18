@@ -2,7 +2,6 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
-import { FaUserGraduate, FaChalkboardTeacher, FaCalendarCheck } from 'react-icons/fa';
 import WhyChooseUs from './WhyChooseUs';
 import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 
@@ -64,38 +63,25 @@ const Home = () => {
             </div>
 
             <div className="max-w-7xl mx-auto px-4 py-24">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl font-bold text-primary mb-4">How It Works</h2>
-                    <p className="text-base-content/70">Three simple steps to start your learning journey</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="card bg-base-100 shadow-xl border border-base-200 text-center hover:-translate-y-2 transition-transform duration-300">
-                        <div className="card-body items-center">
-                            <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-                                <FaChalkboardTeacher className="text-4xl text-primary" />
-                            </div>
-                            <h3 className="card-title text-xl">1. Post a Requirement</h3>
-                            <p className="text-base-content/70">Create a detailed tuition post with your subject, budget, and location.</p>
-                        </div>
-                    </div>
-                    <div className="card bg-base-100 shadow-xl border border-base-200 text-center hover:-translate-y-2 transition-transform duration-300">
-                        <div className="card-body items-center">
-                            <div className="w-20 h-20 rounded-full bg-secondary/10 flex items-center justify-center mb-4">
-                                <FaUserGraduate className="text-4xl text-secondary" />
-                            </div>
-                            <h3 className="card-title text-xl">2. Tutors Apply</h3>
-                            <p className="text-base-content/70">Verified and qualified tutors will apply to your post directly.</p>
-                        </div>
-                    </div>
-                    <div className="card bg-base-100 shadow-xl border border-base-200 text-center hover:-translate-y-2 transition-transform duration-300">
-                        <div className="card-body items-center">
-                            <div className="w-20 h-20 rounded-full bg-accent/10 flex items-center justify-center mb-4">
-                                <FaCalendarCheck className="text-4xl text-accent" />
-                            </div>
-                            <h3 className="card-title text-xl">3. Accept & Learn</h3>
-                            <p className="text-base-content/70">Review their profiles, accept the best match, and start learning.</p>
-                        </div>
-                    </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                        { src: "/b1.webp", delay: 0 },
+                        { src: "/b2.webp", delay: 0.2 },
+                        { src: "/b3.webp", delay: 0.4 },
+                        { src: "/b4.webp", delay: 0.6 }
+                    ].map((item, index) => (
+                        <motion.div
+                            key={index}
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.7, delay: item.delay, ease: "easeOut" }}
+                            whileHover={{ scale: 1.05, y: -10 }}
+                            className="rounded-3xl overflow-hidden shadow-xl border-4 border-transparent hover:border-primary/30 transition-all cursor-pointer bg-base-100"
+                        >
+                            <img src={item.src} alt={`Step ${index + 1}`} className="w-full h-full object-cover aspect-[4/5]" />
+                        </motion.div>
+                    ))}
                 </div>
             </div>
 
