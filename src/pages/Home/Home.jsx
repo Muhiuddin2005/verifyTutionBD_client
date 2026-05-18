@@ -4,11 +4,12 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { FaUserGraduate, FaChalkboardTeacher, FaCalendarCheck } from 'react-icons/fa';
 import WhyChooseUs from './WhyChooseUs';
+import LoadingSpinner from '../../components/Shared/LoadingSpinner';
 
 const Home = () => {
     const axiosPublic = useAxiosPublic();
 
-    const { data: latestTuitions = [] } = useQuery({
+    const { data: latestTuitions = [], isLoading: loadingTuitions } = useQuery({
         queryKey: ['latest-tuitions'],
         queryFn: async () => {
             const res = await axiosPublic.get('/tuitions?limit=6&sort=newest');
@@ -16,13 +17,17 @@ const Home = () => {
         }
     });
 
-    const { data: latestTutors = [] } = useQuery({
+    const { data: latestTutors = [], isLoading: loadingTutors } = useQuery({
         queryKey: ['latest-tutors'],
         queryFn: async () => {
             const res = await axiosPublic.get('/users/tutors');
             return res.data.slice(0, 4);
         }
     });
+
+    if (loadingTuitions || loadingTutors) {
+        return <LoadingSpinner />;
+    }
 
     return (
         <div>

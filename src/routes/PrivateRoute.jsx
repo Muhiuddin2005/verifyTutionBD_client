@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router";
 import useAuth from "../hooks/useAuth";
 import useRole from "../hooks/useRole";
+import LoadingSpinner from "../components/Shared/LoadingSpinner";
 
 const PrivateRoute = ({ children, requiredRole }) => {
     const { user, loading } = useAuth();
@@ -8,11 +9,7 @@ const PrivateRoute = ({ children, requiredRole }) => {
     const location = useLocation();
 
     if (loading || (requiredRole && isRoleLoading)) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <span className="loading loading-spinner loading-lg text-primary"></span>
-            </div>
-        );
+        return <LoadingSpinner />;
     }
 
     if (!user) {
@@ -20,7 +17,7 @@ const PrivateRoute = ({ children, requiredRole }) => {
     }
 
     if (requiredRole && role !== requiredRole) {
-        return <Navigate to="/dashboard" replace />;
+        return <Navigate to="/forbidden" replace />;
     }
 
     return children;

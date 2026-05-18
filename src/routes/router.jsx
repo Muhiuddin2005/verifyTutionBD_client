@@ -23,6 +23,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import Profile from "../pages/Dashboard/Shared/Profile/Profile";
 import Analytics from "../pages/Dashboard/Admin/Analytics/Analytics";
 import PrivateRoute from "./PrivateRoute";
+import Forbidden from "../pages/ErrorPage/Forbidden";
 
 export const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
             { path: "login", element: <Login /> },
             { path: "register", element: <Register /> }
         ]
+    },
+    {
+        path: "/forbidden",
+        element: <Forbidden />
     },
     {
         path: "/dashboard",
