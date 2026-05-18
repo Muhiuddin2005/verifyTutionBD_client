@@ -51,14 +51,14 @@ const TuitionManagement = () => {
                                 <td className="flex gap-2">
                                     <button 
                                         onClick={() => handleStatusChange(tuition._id, 'approved')} 
-                                        disabled={tuition.status === 'approved'}
+                                        disabled={tuition.status === 'approved' || tuition.status === 'filled'}
                                         className="btn btn-sm btn-success text-white"
                                     >
                                         Approve
                                     </button>
                                     <button 
                                         onClick={() => handleStatusChange(tuition._id, 'rejected')} 
-                                        disabled={tuition.status === 'rejected'}
+                                        disabled={tuition.status === 'rejected' || tuition.status === 'filled'}
                                         className="btn btn-sm btn-error text-white"
                                     >
                                         Reject

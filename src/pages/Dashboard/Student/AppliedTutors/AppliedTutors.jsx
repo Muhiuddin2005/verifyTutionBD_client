@@ -21,7 +21,8 @@ const AppliedTutors = () => {
                 applicationId: app._id,
                 tuitionId: app.tuitionId,
                 salary: app.tuition.budget,
-                tutorEmail: app.tutorEmail
+                tutorEmail: app.tutorEmail,
+                studentEmail: user?.email
             });
             
             if (res.data.url) {

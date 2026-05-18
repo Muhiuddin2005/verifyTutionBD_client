@@ -15,14 +15,28 @@ const UserManagement = () => {
         }
     });
 
-    const handleRoleChange = (id, role) => {
-        axiosSecure.patch(`/users/${id}/role`, { role })
-            .then(res => {
-                if (res.data.modifiedCount > 0) {
-                    Swal.fire('Updated', `User is now a ${role}`, 'success');
-                    refetch();
-                }
-            });
+    const handleRoleChange = (id, newRole) => {
+        Swal.fire({
+            title: "Change Role?",
+            text: `Are you sure you want to make this user a ${newRole}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, change it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosSecure.patch(`/users/${id}/role`, { role: newRole })
+                    .then(res => {
+                        if (res.data.modifiedCount > 0) {
+                            Swal.fire('Updated', `User is now a ${newRole}`, 'success');
+                            refetch();
+                        }
+                    });
+            } else {
+                refetch();
+            }
+        });
     };
 
     const handleInfoUpdate = async (e) => {
@@ -97,7 +111,7 @@ const UserManagement = () => {
                                 <td>
                                     <select
                                         className="select select-sm select-bordered w-full max-w-xs focus:outline-primary"
-                                        defaultValue={user.role}
+                                        value={user.role}
                                         onChange={(e) => handleRoleChange(user._id, e.target.value)}
                                     >
                                         <option value="student">Student</option>

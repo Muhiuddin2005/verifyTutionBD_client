@@ -1,5 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
+import { useState } from 'react';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
@@ -9,6 +11,7 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { signInUser } = useAuth();
+    const [showPassword, setShowPassword] = useState(false);
     const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (data) => {
@@ -49,12 +52,21 @@ const Login = () => {
 
                     <div className="form-control">
                         <label className="label"><span className="label-text font-medium">Password</span></label>
-                        <input 
-                            type="password" 
-                            {...register('password', { required: true, minLength: 6 })} 
-                            className="input input-bordered w-full focus:outline-primary" 
-                            placeholder="******" 
-                        />
+                        <div className="relative">
+                            <input 
+                                type={showPassword ? "text" : "password"} 
+                                {...register('password', { required: true, minLength: 6 })} 
+                                className="input input-bordered w-full focus:outline-primary pr-10" 
+                                placeholder="******" 
+                            />
+                            <button 
+                                type="button" 
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/50 hover:text-primary transition-colors"
+                            >
+                                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
+                            </button>
+                        </div>
                         {errors.password?.type === 'required' && <p className='text-error text-sm mt-1'>Password is required</p>}
                         {errors.password?.type === 'minLength' && <p className='text-error text-sm mt-1'>Password must be 6 characters or longer</p>}
                         <label className="label justify-end">

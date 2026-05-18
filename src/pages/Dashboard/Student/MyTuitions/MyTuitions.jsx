@@ -82,8 +82,20 @@ const MyTuitions = () => {
                                     </span>
                                 </td>
                                 <td className="flex gap-2">
-                                    <button onClick={() => handleEdit(tuition)} className="btn btn-sm btn-info text-white"><FaEdit /></button>
-                                    <button onClick={() => handleDelete(tuition._id)} className="btn btn-sm btn-error text-white"><FaTrash /></button>
+                                    <button 
+                                        onClick={() => handleEdit(tuition)} 
+                                        disabled={tuition.status === 'filled'}
+                                        className="btn btn-sm btn-info text-white disabled:opacity-50"
+                                    >
+                                        <FaEdit />
+                                    </button>
+                                    <button 
+                                        onClick={() => handleDelete(tuition._id)} 
+                                        disabled={tuition.status === 'filled'}
+                                        className="btn btn-sm btn-error text-white disabled:opacity-50"
+                                    >
+                                        <FaTrash />
+                                    </button>
                                 </td>
                             </tr>
                         ))}

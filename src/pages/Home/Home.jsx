@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosPublic from '../../hooks/useAxiosPublic';
 import { FaUserGraduate, FaChalkboardTeacher, FaCalendarCheck } from 'react-icons/fa';
+import WhyChooseUs from './WhyChooseUs';
 
 const Home = () => {
     const axiosPublic = useAxiosPublic();
@@ -92,6 +93,8 @@ const Home = () => {
                     </div>
                 </div>
             </div>
+
+            <WhyChooseUs />
 
             <div className="bg-base-200 py-24">
                 <div className="max-w-7xl mx-auto px-4">
