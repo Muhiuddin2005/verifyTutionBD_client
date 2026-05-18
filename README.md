@@ -12,7 +12,7 @@ The Tuition Management System is a complete platform designed to bridge the gap 
 * **Search & Filters:** Advanced sorting and filtering for finding the perfect tuition or tutor.
 
 ## Live URL
-[Insert Live Project URL Here]
+https://verifytutionbd.web.app
 
 ## Technologies & Packages Used
 * **Frontend:** React, Vite, Tailwind CSS, DaisyUI, Framer Motion
