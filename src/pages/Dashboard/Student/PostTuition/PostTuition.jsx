@@ -37,48 +37,57 @@ const PostTuition = () => {
     };
 
     return (
-        <div className="max-w-3xl mx-auto bg-base-100 p-8 rounded-2xl shadow-xl border border-base-200">
-            <h2 className="text-3xl font-bold mb-6 text-center text-primary">Post New Tuition</h2>
-            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Title</span></label>
-                        <input type="text" {...register("title", { required: true })} className="input input-bordered focus:outline-primary" placeholder="Need a Math Tutor" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Subject</span></label>
-                        <input type="text" {...register("subject", { required: true })} className="input input-bordered focus:outline-primary" placeholder="Mathematics" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Class Level</span></label>
-                        <select {...register("classLevel", { required: true })} className="select select-bordered focus:outline-primary" defaultValue="">
-                            <option value="" disabled>Select Class</option>
-                            <option value="Primary">Primary (1-5)</option>
-                            <option value="Middle">Middle (6-8)</option>
-                            <option value="Secondary">Secondary (9-10)</option>
-                            <option value="Higher Secondary">Higher Secondary (11-12)</option>
-                            <option value="University">University</option>
-                        </select>
-                    </div>
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Location / Area</span></label>
-                        <input type="text" {...register("location", { required: true })} className="input input-bordered focus:outline-primary" placeholder="Dhanmondi, Dhaka" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Monthly Budget (BDT)</span></label>
-                        <input type="number" {...register("budget", { required: true })} className="input input-bordered focus:outline-primary" placeholder="5000" />
-                    </div>
-                    <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Days per Week</span></label>
-                        <input type="number" {...register("daysPerWeek", { required: true, max: 7, min: 1 })} className="input input-bordered focus:outline-primary" placeholder="3" />
-                    </div>
+        <div className="card max-w-3xl mx-auto bg-base-100 w-full shrink-0 shadow-2xl rounded-3xl border border-base-200/60 p-4 md:p-8">
+            <div className="card-body p-0">
+                <div className="text-center mb-8">
+                    <h3 className="text-3xl font-extrabold text-primary mb-2 tracking-tight">Post New Tuition</h3>
+                    <p className='text-base-content/60 font-medium'>Find the perfect tutor for your needs</p>
                 </div>
-                <div className="form-control">
-                    <label className="label"><span className="label-text font-medium">Detailed Requirements</span></label>
-                    <textarea {...register("description", { required: true })} className="textarea textarea-bordered h-24 focus:outline-primary" placeholder="Mention specific syllabus, timings, etc."></textarea>
-                </div>
-                <button type="submit" className="btn btn-primary w-full text-secondary font-bold text-lg mt-4">Post Tuition Requirement</button>
-            </form>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 md:gap-x-6">
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Title</span></label>
+                            <input type="text" {...register("title", { required: true })} className="input w-full" placeholder="Need a Math Tutor" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Subject</span></label>
+                            <input type="text" {...register("subject", { required: true })} className="input w-full" placeholder="Mathematics" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Class Level</span></label>
+                            <select {...register("classLevel", { required: true })} className="select w-full" defaultValue="">
+                                <option value="" disabled>Select Class</option>
+                                <option value="Primary">Primary (1-5)</option>
+                                <option value="Middle">Middle (6-8)</option>
+                                <option value="Secondary">Secondary (9-10)</option>
+                                <option value="Higher Secondary">Higher Secondary (11-12)</option>
+                                <option value="University">University</option>
+                            </select>
+                        </div>
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Location / Area</span></label>
+                            <input type="text" {...register("location", { required: true })} className="input w-full" placeholder="Dhanmondi, Dhaka" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Monthly Budget (BDT)</span></label>
+                            <input type="number" {...register("budget", { required: true })} className="input w-full" placeholder="5000" />
+                        </div>
+                        <div className="form-control">
+                            <label className="label"><span className="label-text">Days per Week</span></label>
+                            <input type="number" {...register("daysPerWeek", { required: true, max: 7, min: 1 })} className="input w-full" placeholder="3" />
+                        </div>
+                    </div>
+                    <div className="form-control mt-2">
+                        <label className="label"><span className="label-text">Detailed Requirements</span></label>
+                        <textarea {...register("description", { required: true })} className="textarea w-full h-32" placeholder="Mention specific syllabus, timings, etc."></textarea>
+                    </div>
+                    <div className="form-control mt-8">
+                        <button type="submit" className="btn btn-primary w-full rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-300 border-none">
+                            Post Tuition Requirement
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

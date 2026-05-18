@@ -73,7 +73,7 @@ const Home = () => {
                             <h2 className="text-4xl font-bold text-primary mb-3">Latest Tuitions</h2>
                             <p className="text-base-content/70">Fresh opportunities waiting for talented tutors.</p>
                         </div>
-                        <Link to="/tuitions" className="btn btn-outline btn-primary">View All</Link>
+                        <Link to="/tuitions" className="btn">View All</Link>
                     </div>
                     
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -109,7 +109,7 @@ const Home = () => {
                         <h2 className="text-4xl font-bold text-primary mb-3">Featured Tutors</h2>
                         <p className="text-base-content/70">Meet some of our top verified educators.</p>
                     </div>
-                    <Link to="/tutors" className="btn btn-primary">View All Tutors</Link>
+                    <Link to="/tutors" className="btn ">View All Tutors</Link>
                 </div>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

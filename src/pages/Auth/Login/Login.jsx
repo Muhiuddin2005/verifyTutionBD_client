@@ -17,7 +17,6 @@ const Login = () => {
     const handleLogin = (data) => {
         signInUser(data.email, data.password)
             .then(result => {
-                console.log("Logged in user:", result.user);
                 Swal.fire({
                     icon: 'success',
                     title: 'Welcome back!',
@@ -27,60 +26,72 @@ const Login = () => {
                 navigate(from, { replace: true });
             })
             .catch(error => {
-                console.log(error);
                 Swal.fire({ icon: 'error', title: 'Login Failed', text: error.message });
             });
     };
 
     return (
-        <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl border border-base-200">
-            <div className="card-body pb-2">
-                <h3 className="text-3xl font-bold text-center mb-2">Welcome Back</h3>
-                <p className='text-center text-base-content/70 mb-6'>Log in to manage your tuitions</p>
+        // Added rounded-3xl and polished the shadow/border for a premium card look
+        <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl rounded-3xl border border-base-200/60 p-2 md:p-4">
+            <div className="card-body">
+                <div className="text-center mb-6">
+                    <h3 className="text-3xl font-extrabold text-primary mb-2 tracking-tight">Welcome Back</h3>
+                    <p className='text-base-content/60 font-medium'>Log in to manage your tuitions</p>
+                </div>
                 
-                <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
+                {/* We rely on the global .form-control margins now, so no need for space-y classes here */}
+                <form onSubmit={handleSubmit(handleLogin)}>
+                    
                     <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Email</span></label>
+                        <label className="label"><span className="label-text">Email Address</span></label>
                         <input 
                             type="email" 
                             {...register('email', { required: true })} 
-                            className="input input-bordered w-full focus:outline-primary" 
+                            className="input w-full" 
                             placeholder="mail@example.com" 
                         />
-                        {errors.email?.type === 'required' && <p className='text-error text-sm mt-1'>Email is required</p>}
+                        {errors.email && <p className='text-error text-xs font-semibold mt-2'>Email is required</p>}
                     </div>
 
                     <div className="form-control">
-                        <label className="label"><span className="label-text font-medium">Password</span></label>
+                        <div className="flex justify-between items-center">
+                            <label className="label"><span className="label-text">Password</span></label>
+                            <a href="#" className="text-xs font-bold text-primary hover:text-secondary transition-colors">Forgot password?</a>
+                        </div>
                         <div className="relative">
                             <input 
                                 type={showPassword ? "text" : "password"} 
                                 {...register('password', { required: true, minLength: 6 })} 
-                                className="input input-bordered w-full focus:outline-primary pr-10" 
-                                placeholder="******" 
+                                className="input w-full pr-12" 
+                                placeholder="••••••••" 
                             />
                             <button 
                                 type="button" 
                                 onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-base-content/50 hover:text-primary transition-colors"
+                                className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-primary transition-colors"
                             >
                                 {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
                             </button>
                         </div>
-                        {errors.password?.type === 'required' && <p className='text-error text-sm mt-1'>Password is required</p>}
-                        {errors.password?.type === 'minLength' && <p className='text-error text-sm mt-1'>Password must be 6 characters or longer</p>}
-                        <label className="label justify-end">
-                            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                        </label>
+                        {errors.password?.type === 'required' && <p className='text-error text-xs font-semibold mt-2'>Password is required</p>}
+                        {errors.password?.type === 'minLength' && <p className='text-error text-xs font-semibold mt-2'>Must be 6 characters or longer</p>}
                     </div>
 
-                    <button className="btn btn-primary w-full text-secondary font-bold mt-2">Log In</button>
+                    <div className="form-control mt-8">
+                        <button className="btn btn-primary w-full rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-300 border-none">
+                            Log In Securely
+                        </button>
+                    </div>
                 </form>
                 
-                <p className="text-center text-sm mt-4">
-                    New to verifyTutionBD? <Link state={location.state} className='text-primary font-bold hover:underline' to="/auth/register">Create an account</Link>
+                <p className="text-center text-sm font-medium text-base-content/70 mt-6">
+                    New to verifyTutionBD?{' '}
+                    <Link state={location.state} className='text-secondary hover:text-primary font-bold transition-colors' to="/auth/register">
+                        Create an account
+                    </Link>
                 </p>
             </div>
+            
             <SocialLogin />
         </div>
     );

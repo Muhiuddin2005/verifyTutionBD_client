@@ -5,19 +5,26 @@
   themes: light, dark;
 };
 
+/* --- 1. NEW COLOR PALETTE --- */
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #0047AB;
-  --color-secondary: #4DB04F;
-  --color-base-content: #0047AB;
+  --color-primary: #4F46E5; /* Indigo - Rich, modern primary */
+  --color-secondary: #0EA5E9; /* Sky Blue - Fresh, vibrant secondary */
+  --color-base-100: #FFFFFF;
+  --color-base-200: #F8FAFC; /* Slightly cooler, softer gray */
+  --color-base-300: #F1F5F9;
+  --color-base-content: #1E293B; /* Slate 800 - softer than pure black */
 }
 
 @plugin "daisyui/theme/index.js" {
   name: "dark";
-  --color-primary: #0047AB;
-  --color-secondary: #4DB04F;
-  --color-base-content: #E2E8F0;
+  --color-primary: #6366F1;
+  --color-secondary: #38BDF8;
+  --color-base-100: #0F172A;
+  --color-base-200: #1E293B;
+  --color-base-300: #334155;
+  --color-base-content: #F8FAFC;
 }
 
 body {
@@ -26,14 +33,36 @@ body {
   font-style: normal;
 }
 
-/* --- GLOBAL BUTTON OVERRIDE --- */
-/* Forces all primary buttons to have white text, overriding text-secondary */
+/* --- 2. GLOBAL OVERRIDES --- */
 @layer components {
-  .btn-primary {
+  /* Ensure all buttons have white text for contrast */
+  .btn-primary, .btn-secondary, .btn-info, .btn-success, .btn-error {
     color: #ffffff !important;
   }
-  .btn-info, .btn-success, .btn-error {
-    color: #ffffff !important;
+
+  /* --- 3. GLOBAL FORM STYLING --- */
+  /* Upgrades ALL inputs, textareas, and selects sitewide */
+  
+  .form-control {
+    @apply mb-5; /* Perfect vertical gap between form fields */
+  }
+
+  .form-control .label {
+    @apply pb-1.5; /* Tighten gap between label and input */
+  }
+
+  .form-control .label-text {
+    @apply text-sm font-bold text-base-content/80 tracking-wide;
+  }
+
+  /* Base input styles: Soft background, nice border radius */
+  .input, .select, .textarea {
+    @apply bg-base-200/50 border-base-300 rounded-xl transition-all duration-300 shadow-sm;
+  }
+
+  /* Focus state: Removes harsh black outline, adds beautiful colored glow */
+  .input:focus, .select:focus, .textarea:focus {
+    @apply outline-none border-primary ring-4 ring-primary/20 bg-base-100 shadow-md;
   }
 }
 
