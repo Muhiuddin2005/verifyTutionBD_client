@@ -42,8 +42,8 @@ const Home = () => {
 
     return (
         <div>
-            {/* 1. New Framer Motion Sliding Banner (No text, no buttons) */}
-            <div className="relative w-full h-[75vh] overflow-hidden bg-base-300">
+            {/* 1. Responsive Framer Motion Sliding Banner */}
+            <div className="relative w-full h-[40vh] sm:h-[50vh] md:h-[60vh] lg:h-[75vh] overflow-hidden bg-base-300">
                 <AnimatePresence mode="wait">
                     <motion.img
                         key={currentImage}
