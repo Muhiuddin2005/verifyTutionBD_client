@@ -9,48 +9,20 @@ const features = [
 
 const WhyChooseUs = () => {
     return (
-        <section className="py-20 overflow-hidden">
-            <div className="text-center mb-16">
-                <motion.h2 
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-4xl font-bold mb-4"
-                >
-                    Why Choose verifyTutionBD?
-                </motion.h2>
-                <p className="text-base-content/70 max-w-2xl mx-auto">
-                    We bridge the gap between students and expert educators with a secure, transparent, and easy-to-use platform.
-                </p>
-            </div>
-
-            <div className="relative w-full overflow-hidden py-10 px-4">
-                {/* Gradient overlays for smooth fading edges */}
-                <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-base-100 to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-base-100 to-transparent z-10 pointer-events-none"></div>
-                
-                <motion.div 
-                    className="flex gap-8 w-max"
-                    animate={{ x: ["0%", "-50%"] }}
-                    transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
-                >
-                    {[...features, ...features].map((feature, index) => (
-                        <motion.div 
-                            key={`${feature.id}-${index}`}
-                            whileHover={{ scale: 1.05, y: -10 }}
-                            transition={{ duration: 0.3 }}
-                            className="card w-80 md:w-96 bg-base-100 shadow-xl border border-base-200 cursor-pointer overflow-hidden flex-shrink-0"
-                        >
-                            <figure className="h-56 w-full bg-base-200">
-                                <img src={feature.img} alt={feature.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
-                            </figure>
-                            <div className="card-body items-center text-center p-6">
-                                <h3 className="card-title text-xl mb-2">{feature.title}</h3>
-                                <p className="text-sm text-base-content/70">{feature.desc}</p>
-                            </div>
-                        </motion.div>
+        <section className="py-16 bg-base-200">
+            <div className="container mx-auto px-4">
+                <h2 className="text-3xl font-bold text-center mb-12 text-primary">Why You Choose Us</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    {features.map((feature, index) => (
+                        <div key={index} className="bg-base-100 rounded-lg shadow-lg overflow-hidden flex items-center justify-center hover:scale-105 transition-transform">
+                            <img 
+                                src={feature.img} 
+                                alt={feature.title || `Why Choose Us Image ${index + 1}`} 
+                                className="w-full h-auto object-cover aspect-video" 
+                            />
+                        </div>
                     ))}
-                </motion.div>
+                </div>
             </div>
         </section>
     );

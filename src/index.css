@@ -8,14 +8,14 @@
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #1B416B;
+  --color-primary: #0047AB;
   --color-secondary: #4DB04F;
-  --color-base-content: #1B416B;
+  --color-base-content: #0047AB;
 }
 
 @plugin "daisyui/theme/index.js" {
   name: "dark";
-  --color-primary: #1B416B;
+  --color-primary: #0047AB;
   --color-secondary: #4DB04F;
   --color-base-content: #E2E8F0;
 }
@@ -24,4 +24,46 @@ body {
   font-family: "Urbanist", sans-serif;
   font-optical-sizing: auto;
   font-style: normal;
+}
+
+/* Global button text color override */
+button,
+.btn {
+  color: #0047AB;
+}
+
+button:hover,
+.btn:hover {
+  color: #002D62;
+}
+
+/* Approved Status */
+.status-approved {
+  background-color: #DEF7EC;
+  color: #03543F;
+  border: 1px solid #C3E6CB;
+}
+
+/* Failed/Field Status */
+.status-failed,
+.status-field {
+  background-color: #FEE2E2;
+  color: #991B1B;
+  border: 1px solid #F8D7DA;
+}
+
+/* Pending Status */
+.status-pending {
+  background-color: #FEF3C7;
+  color: #92400E;
+  border: 1px solid #FFEBAA;
+}
+
+/* Common status pill styling */
+.status-pill {
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  display: inline-block;
 }
