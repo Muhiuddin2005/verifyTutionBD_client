@@ -8,14 +8,16 @@
 @plugin "daisyui/theme/index.js" {
   name: "light";
   default: true;
-  --color-primary: #4DB04F;
-  --color-secondary: #1B416B;
+  --color-primary: #1B416B;
+  --color-secondary: #4DB04F;
+  --color-base-content: #1B416B;
 }
 
 @plugin "daisyui/theme/index.js" {
   name: "dark";
-  --color-primary: #4DB04F;
-  --color-secondary: #1B416B;
+  --color-primary: #1B416B;
+  --color-secondary: #4DB04F;
+  --color-base-content: #E2E8F0;
 }
 
 body {
