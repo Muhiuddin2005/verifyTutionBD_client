@@ -2,10 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import useAuth from '../../../../hooks/useAuth';
 
 const UserManagement = () => {
     const axiosSecure = useAxiosSecure();
     const [selectedUser, setSelectedUser] = useState(null);
+    const { user: currentUser } = useAuth();
 
     const { data: users = [], refetch, isLoading } = useQuery({
         queryKey: ['all-users'],
@@ -14,6 +16,8 @@ const UserManagement = () => {
             return res.data;
         }
     });
+
+    const totalAdmins = users.filter(u => u.role === 'admin').length;
 
     const handleRoleChange = (id, newRole) => {
         Swal.fire({
@@ -95,39 +99,51 @@ const UserManagement = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map(user => (
-                            <tr key={user._id}>
-                                <td>
-                                    <div className="flex items-center gap-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle w-12 h-12">
-                                                <img src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt="Avatar" />
+                        {users.map(user => {
+                            const isOnlyAdmin = user.role === 'admin' && totalAdmins <= 1;
+                            const isSelf = user.email === currentUser?.email;
+
+                            return (
+                                <tr key={user._id}>
+                                    <td>
+                                        <div className="flex items-center gap-3">
+                                            <div className="avatar">
+                                                <div className="mask mask-squircle w-12 h-12">
+                                                    <img src={user.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt="Avatar" />
+                                                </div>
                                             </div>
+                                            <div className="font-bold">{user.name}</div>
                                         </div>
-                                        <div className="font-bold">{user.name}</div>
-                                    </div>
-                                </td>
-                                <td>{user.email}</td>
-                                <td>
-                                    <select
-                                        className="select select-sm select-bordered w-full max-w-xs focus:outline-primary"
-                                        value={user.role}
-                                        onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                                    >
-                                        <option value="student">Student</option>
-                                        <option value="tutor">Tutor</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </td>
-                                <td className="flex gap-2">
-                                    <button
-                                        onClick={() => { setSelectedUser(user); document.getElementById('edit_user_modal').showModal(); }}
-                                        className="btn btn-sm btn-info text-white"
-                                    >Edit</button>
-                                    <button onClick={() => handleDelete(user._id)} className="btn btn-sm btn-error text-white">Delete</button>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                    <td>{user.email}</td>
+                                    <td>
+                                        <select
+                                            className="select select-sm select-bordered w-full max-w-xs focus:outline-primary"
+                                            value={user.role}
+                                            onChange={(e) => handleRoleChange(user._id, e.target.value)}
+                                        >
+                                            <option value="student">Student</option>
+                                            <option value="tutor">Tutor</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </td>
+                                    <td className="flex gap-2">
+                                        <button
+                                            onClick={() => { setSelectedUser(user); document.getElementById('edit_user_modal').showModal(); }}
+                                            className="btn btn-sm btn-info text-white"
+                                        >Edit</button>
+                                        <button 
+                                            onClick={() => handleDelete(user._id)} 
+                                            disabled={isOnlyAdmin || isSelf}
+                                            title={isSelf ? "You cannot delete yourself" : isOnlyAdmin ? "Cannot delete the last admin" : "Delete User"}
+                                            className="btn btn-sm btn-error text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>

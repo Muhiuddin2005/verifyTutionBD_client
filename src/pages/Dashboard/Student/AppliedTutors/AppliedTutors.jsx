@@ -1,11 +1,14 @@
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import useAuth from '../../../../hooks/useAuth';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { FaEye } from 'react-icons/fa';
 
 const AppliedTutors = () => {
     const { user } = useAuth();
     const axiosSecure = useAxiosSecure();
+    const [selectedApp, setSelectedApp] = useState(null);
 
     const { data: applications = [], isLoading } = useQuery({
         queryKey: ['applications-for-student', user?.email],
@@ -75,7 +78,14 @@ const AppliedTutors = () => {
                                         {app.status}
                                     </span>
                                 </td>
-                                <td>
+                                <td className="flex gap-2">
+                                    <button 
+                                        onClick={() => { setSelectedApp(app); document.getElementById('details_modal').showModal(); }}
+                                        className="btn btn-sm btn-info text-white"
+                                        title="View Application Details"
+                                    >
+                                        <FaEye /> View
+                                    </button>
                                     {app.status === 'pending' && app.tuition?.status !== 'filled' && (
                                         <button 
                                             onClick={() => handleAccept(app)} 
@@ -85,7 +95,7 @@ const AppliedTutors = () => {
                                         </button>
                                     )}
                                     {app.tuition?.status === 'filled' && app.status !== 'approved' && (
-                                        <span className="text-sm text-error font-medium">Post Filled</span>
+                                        <span className="text-sm text-error font-medium flex items-center px-2">Post Filled</span>
                                     )}
                                 </td>
                             </tr>
@@ -94,6 +104,50 @@ const AppliedTutors = () => {
                 </table>
                 {applications.length === 0 && <p className="text-center text-gray-500 my-8 text-lg">No tutors have applied to your posts yet.</p>}
             </div>
+
+            <dialog id="details_modal" className="modal">
+                <div className="modal-box">
+                    <h3 className="font-bold text-2xl mb-6 text-primary border-b pb-2">Tutor Application Details</h3>
+                    {selectedApp && (
+                        <div className="space-y-4">
+                            <div className="flex items-center gap-4 mb-6">
+                                <div className="avatar">
+                                    <div className="w-16 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+                                        <img src={selectedApp.tutorImage || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt="tutor" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-xl font-bold">{selectedApp.tutorName}</h4>
+                                    <p className="text-sm text-base-content/70">{selectedApp.tutorEmail}</p>
+                                </div>
+                            </div>
+                            
+                            <div className="bg-base-200 p-4 rounded-xl">
+                                <span className="block text-sm text-base-content/60 mb-1 font-semibold">Qualifications</span>
+                                <span className="text-lg">{selectedApp.qualifications}</span>
+                            </div>
+                            
+                            <div className="bg-base-200 p-4 rounded-xl">
+                                <span className="block text-sm text-base-content/60 mb-1 font-semibold">Experience</span>
+                                <span className="text-lg">{selectedApp.experience}</span>
+                            </div>
+                            
+                            <div className="bg-base-200 p-4 rounded-xl border border-primary/20 bg-primary/5">
+                                <span className="block text-sm text-base-content/60 mb-1 font-semibold">Expected Salary</span>
+                                <span className="text-lg font-bold text-primary">৳ {selectedApp.expectedSalary}</span>
+                            </div>
+                        </div>
+                    )}
+                    <div className="modal-action">
+                        <form method="dialog">
+                            <button className="btn btn-outline">Close</button>
+                        </form>
+                    </div>
+                </div>
+                <form method="dialog" className="modal-backdrop">
+                    <button>close</button>
+                </form>
+            </dialog>
         </div>
     );
 };
