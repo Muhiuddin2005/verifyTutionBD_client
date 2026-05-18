@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
 
 const features = [
-    { id: 1, title: 'Verified Tutors', desc: 'Every tutor undergoes a strict verification process to ensure quality and safety.' },
-    { id: 2, title: 'Transparent Payments', desc: 'Secure, milestone-based payments ensure you only pay for completed sessions.' },
-    { id: 3, title: 'Smart Matching', desc: 'Find the perfect tutor based on subject, location, class, and budget.' },
-    { id: 4, title: 'Admin Mediation', desc: 'Our admin team monitors the system to quickly resolve any disputes.' }
+    { id: 1, img: '/c1.png', title: 'Verified Tutors', desc: 'Every tutor undergoes a strict verification process to ensure quality and safety.' },
+    { id: 2, img: '/c2.png', title: 'Transparent Payments', desc: 'Secure, milestone-based payments ensure you only pay for completed sessions.' },
+    { id: 3, img: '/c3.png', title: 'Smart Matching', desc: 'Find the perfect tutor based on subject, location, class, and budget.' },
+    { id: 4, img: '/c4.png', title: 'Admin Mediation', desc: 'Our admin team monitors the system to quickly resolve any disputes.' }
 ];
 
 const containerVariants = {
@@ -57,12 +57,12 @@ const WhyChooseUs = () => {
                         key={feature.id}
                         variants={cardVariants}
                         whileHover="hover"
-                        className="card bg-base-100 shadow-xl border border-base-200 cursor-pointer"
+                        className="card bg-base-100 shadow-xl border border-base-200 cursor-pointer overflow-hidden"
                     >
-                        <div className="card-body items-center text-center">
-                            <div className="w-16 h-16 bg-primary/20 rounded-full mb-4 flex items-center justify-center">
-                                <span className="text-primary font-bold text-xl">{feature.id}</span>
-                            </div>
+                        <figure className="h-48 w-full bg-base-200">
+                            <img src={feature.img} alt={feature.title} className="w-full h-full object-cover hover:scale-110 transition-transform duration-500" />
+                        </figure>
+                        <div className="card-body items-center text-center p-6">
                             <h3 className="card-title text-xl mb-2">{feature.title}</h3>
                             <p className="text-sm text-base-content/70">{feature.desc}</p>
                         </div>
