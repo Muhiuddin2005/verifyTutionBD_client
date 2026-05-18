@@ -3,6 +3,24 @@ import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import serviceAreas from '../../assets/data/serviceAreas.json';
 
+// 1. Import Leaflet itself
+import L from 'leaflet'; 
+
+// 2. Import the default marker images directly from the leaflet package
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
+
+// 3. Delete the broken default icon URL mapping
+delete L.Icon.Default.prototype._getIconUrl;
+
+// 4. Set the new default options using your imported images
+L.Icon.Default.mergeOptions({
+    iconUrl: markerIcon,
+    iconRetinaUrl: markerIcon2x,
+    shadowUrl: markerShadow,
+});
+
 const About = () => {
     // Center of Bangladesh for the default map view
     const defaultPosition = [23.6850, 90.3563];
@@ -32,7 +50,7 @@ const About = () => {
                     <MapContainer
                         center={defaultPosition}
                         zoom={7}
-                        scrollWheelZoom={false} // Turned off by default to prevent annoying scrolling interruptions when reading the page
+                        scrollWheelZoom={false}
                         className="h-full w-full"
                     >
                         <TileLayer
