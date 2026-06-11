@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "verifytutionbd",
     "public": "dist",
     "ignore": [
       "firebase.json",
