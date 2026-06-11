@@ -17,7 +17,6 @@ const PaymentsHistory = () => {
         },
         onError: (err) => {
             const message = err.response?.data?.message || err.response?.data?.error || err.message || 'Failed to load payments';
-            // eslint-disable-next-line no-console
             console.error('Payments fetch error:', message);
         }
     });

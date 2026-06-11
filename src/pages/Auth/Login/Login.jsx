@@ -1,13 +1,21 @@
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useState } from 'react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { FaEye, FaEyeSlash, FaEnvelope, FaLock } from 'react-icons/fa';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { loginSchema } from '../../../utils/validationSchemas';
 import SocialLogin from '../SocialLogin/SocialLogin';
 import useAuth from '../../../hooks/useAuth';
 import Swal from 'sweetalert2';
+import Input from '../../../components/ui/Input';
+import Button from '../../../components/ui/Button';
+import Card from '../../../components/ui/Card';
 
 const Login = () => {
-    const { register, handleSubmit, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm({
+        resolver: zodResolver(loginSchema),
+        mode: "onChange"
+    });
     const location = useLocation();
     const navigate = useNavigate();
     const { signInUser } = useAuth();
@@ -15,8 +23,8 @@ const Login = () => {
     const from = location.state?.from?.pathname || '/';
 
     const handleLogin = (data) => {
-        signInUser(data.email, data.password)
-            .then(result => {
+        return signInUser(data.email, data.password)
+            .then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Welcome back!',
@@ -31,69 +39,103 @@ const Login = () => {
     };
 
     return (
-        // Added rounded-3xl and polished the shadow/border for a premium card look
-        <div className="card bg-base-100 w-full max-w-md shrink-0 shadow-2xl rounded-3xl border border-base-200/60 p-2 md:p-4">
-            <div className="card-body">
-                <div className="text-center mb-6">
-                    <h3 className="text-3xl font-extrabold text-primary mb-2 tracking-tight">Welcome Back</h3>
-                    <p className='text-base-content/60 font-medium'>Log in to manage your tuitions</p>
-                </div>
-                
-                {/* We rely on the global .form-control margins now, so no need for space-y classes here */}
-                <form onSubmit={handleSubmit(handleLogin)}>
-                    
-                    <div className="form-control">
-                        <label className="label"><span className="label-text">Email Address</span></label>
-                        <input 
-                            type="email" 
-                            {...register('email', { required: true })} 
-                            className="input w-full" 
-                            placeholder="mail@example.com" 
-                        />
-                        {errors.email && <p className='text-error text-xs font-semibold mt-2'>Email is required</p>}
-                    </div>
-
-                    <div className="form-control">
-                        <div className="flex justify-between items-center">
-                            <label className="label"><span className="label-text">Password</span></label>
-                            <a href="#" className="text-xs font-bold text-primary hover:text-secondary transition-colors">Forgot password?</a>
-                        </div>
-                        <div className="relative">
-                            <input 
-                                type={showPassword ? "text" : "password"} 
-                                {...register('password', { required: true, minLength: 6 })} 
-                                className="input w-full pr-12" 
-                                placeholder="••••••••" 
-                            />
-                            <button 
-                                type="button" 
-                                onClick={() => setShowPassword(!showPassword)}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 text-base-content/40 hover:text-primary transition-colors"
-                            >
-                                {showPassword ? <FaEyeSlash size={18} /> : <FaEye size={18} />}
-                            </button>
-                        </div>
-                        {errors.password?.type === 'required' && <p className='text-error text-xs font-semibold mt-2'>Password is required</p>}
-                        {errors.password?.type === 'minLength' && <p className='text-error text-xs font-semibold mt-2'>Must be 6 characters or longer</p>}
-                    </div>
-
-                    <div className="form-control mt-8">
-                        <button className="btn btn-primary w-full rounded-xl shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:-translate-y-0.5 transition-all duration-300 border-none">
-                            Log In Securely
-                        </button>
-                    </div>
-                </form>
-                
-                <p className="text-center text-sm font-medium text-base-content/70 mt-6">
-                    New to verifyTutionBD?{' '}
-                    <Link state={location.state} className='text-secondary hover:text-primary font-bold transition-colors' to="/auth/register">
-                        Create an account
-                    </Link>
-                </p>
+        <Card className="w-full max-w-md p-4 md:p-6" hoverable>
+            <div className="text-center mb-6">
+                <h3 className="text-3xl font-extrabold text-primary mb-2 tracking-tight">Welcome Back</h3>
+                <p className='text-base-content/60 font-medium'>Log in to manage your tuitions</p>
             </div>
             
+            <form onSubmit={handleSubmit(handleLogin)} className="space-y-4">
+                <Input
+                    label="Email Address"
+                    type="email"
+                    placeholder="mail@example.com"
+                    leftIcon={<FaEnvelope />}
+                    error={errors.email?.message}
+                    disabled={isSubmitting}
+                    required
+                    {...register('email')}
+                />
+
+                <div className="form-control w-full">
+                    <div className="flex justify-between items-center mb-1">
+                        <label className="label-text font-bold text-base-content/80 text-sm">
+                            Password <span className="text-error font-bold">*</span>
+                        </label>
+                        <a href="#" className="text-xs font-bold text-primary hover:text-secondary transition-colors">Forgot password?</a>
+                    </div>
+                    
+                    <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        leftIcon={<FaLock />}
+                        rightIcon={
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="text-base-content/40 hover:text-primary transition-colors cursor-pointer"
+                                aria-label={showPassword ? "Hide password" : "Show password"}
+                            >
+                                {showPassword ? <FaEyeSlash size={16} /> : <FaEye size={16} />}
+                            </button>
+                        }
+                        error={errors.password?.message}
+                        disabled={isSubmitting}
+                        {...register('password')}
+                    />
+                </div>
+
+                <div className="pt-2">
+                    <Button
+                        type="submit"
+                        className="w-full"
+                        isLoading={isSubmitting}
+                    >
+                        Log In Securely
+                    </Button>
+                </div>
+            </form>
+
+            <div className="flex gap-3 mt-4">
+                <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 text-xs" 
+                    onClick={() => {
+                        setValue('email', 'student@verifytutionbd.com', { shouldValidate: true });
+                        setValue('password', 'Password123!', { shouldValidate: true });
+                        setTimeout(() => {
+                            handleSubmit(handleLogin)();
+                        }, 50);
+                    }}
+                >
+                    Demo Student
+                </Button>
+                <Button 
+                    variant="outline" 
+                    size="sm" 
+                    className="flex-1 text-xs" 
+                    onClick={() => {
+                        setValue('email', 'admin@verifytutionbd.com', { shouldValidate: true });
+                        setValue('password', 'Password123!', { shouldValidate: true });
+                        setTimeout(() => {
+                            handleSubmit(handleLogin)();
+                        }, 50);
+                    }}
+                >
+                    Demo Admin
+                </Button>
+            </div>
+            
+            <p className="text-center text-sm font-medium text-base-content/70 mt-6">
+                New to verifyTutionBD?{' '}
+                <Link state={location.state} className='text-secondary hover:text-primary font-bold transition-colors' to="/auth/register">
+                    Create an account
+                </Link>
+            </p>
+            
             <SocialLogin />
-        </div>
+        </Card>
     );
 };
 

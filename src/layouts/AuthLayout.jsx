@@ -1,4 +1,5 @@
 import { Outlet, Link } from 'react-router';
+import { Suspense } from 'react';
 import Logo from '../components/Logo/Logo';
 import { FaArrowLeft } from 'react-icons/fa';
 
@@ -15,7 +16,13 @@ const AuthLayout = () => {
                 </div>
                 
                 <div className="flex items-center justify-center w-full">
-                    <Outlet />
+                    <Suspense fallback={
+                        <div className="flex justify-center items-center py-12">
+                            <span className="loading loading-spinner text-primary loading-lg"></span>
+                        </div>
+                    }>
+                        <Outlet />
+                    </Suspense>
                 </div>
             </div>
 

@@ -1,29 +1,37 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createBrowserRouter } from "react-router";
+import { lazy } from "react";
 import RootLayout from "../layouts/RootLayout";
-import Home from "../pages/Home/Home";
-import About from "../pages/About/About";
-import Contact from "../pages/Contact/Contact";
 import AuthLayout from "../layouts/AuthLayout";
-import Login from "../pages/Auth/Login/Login";
-import Register from "../pages/Auth/Register/Register";
 import DashboardLayout from "../layouts/DashboardLayout";
-import PostTuition from "../pages/Dashboard/Student/PostTuition/PostTuition";
-import MyTuitions from "../pages/Dashboard/Student/MyTuitions/MyTuitions";
-import TuitionsListing from "../pages/Tuitions/TuitionsListing";
-import TuitionDetails from "../pages/Tuitions/TuitionDetails";
-import TutorsListing from "../pages/Tutors/TutorsListing";
-import TuitionManagement from "../pages/Dashboard/Admin/TuitionManagement/TuitionManagement";
-import UserManagement from "../pages/Dashboard/Admin/UserManagement/UserManagement";
-import AppliedTutors from "../pages/Dashboard/Student/AppliedTutors/AppliedTutors";
-import PaymentSuccess from "../pages/Dashboard/PaymentStatus/PaymentSuccess";
-import PaymentsHistory from "../pages/Dashboard/Shared/PaymentsHistory/PaymentsHistory";
-import MyApplications from "../pages/Dashboard/Tutor/MyApplications/MyApplications";
-import OngoingTuitions from "../pages/Dashboard/Tutor/OngoingTuitions/OngoingTuitions";
-import ErrorPage from "../pages/ErrorPage/ErrorPage";
-import Profile from "../pages/Dashboard/Shared/Profile/Profile";
-import Analytics from "../pages/Dashboard/Admin/Analytics/Analytics";
 import PrivateRoute from "./PrivateRoute";
 import Forbidden from "../pages/ErrorPage/Forbidden";
+
+// Lazy-loaded page components
+const Home = lazy(() => import("../pages/Home/Home"));
+const About = lazy(() => import("../pages/About/About"));
+const Contact = lazy(() => import("../pages/Contact/Contact"));
+const Login = lazy(() => import("../pages/Auth/Login/Login"));
+const Register = lazy(() => import("../pages/Auth/Register/Register"));
+const PostTuition = lazy(() => import("../pages/Dashboard/Student/PostTuition/PostTuition"));
+const MyTuitions = lazy(() => import("../pages/Dashboard/Student/MyTuitions/MyTuitions"));
+const TuitionsListing = lazy(() => import("../pages/Tuitions/TuitionsListing"));
+const TuitionDetails = lazy(() => import("../pages/Tuitions/TuitionDetails"));
+const TutorsListing = lazy(() => import("../pages/Tutors/TutorsListing"));
+const TuitionManagement = lazy(() => import("../pages/Dashboard/Admin/TuitionManagement/TuitionManagement"));
+const UserManagement = lazy(() => import("../pages/Dashboard/Admin/UserManagement/UserManagement"));
+const AppliedTutors = lazy(() => import("../pages/Dashboard/Student/AppliedTutors/AppliedTutors"));
+const PaymentSuccess = lazy(() => import("../pages/Dashboard/PaymentStatus/PaymentSuccess"));
+const PaymentsHistory = lazy(() => import("../pages/Dashboard/Shared/PaymentsHistory/PaymentsHistory"));
+const MyApplications = lazy(() => import("../pages/Dashboard/Tutor/MyApplications/MyApplications"));
+const OngoingTuitions = lazy(() => import("../pages/Dashboard/Tutor/OngoingTuitions/OngoingTuitions"));
+const ErrorPage = lazy(() => import("../pages/ErrorPage/ErrorPage"));
+const Profile = lazy(() => import("../pages/Dashboard/Shared/Profile/Profile"));
+const Analytics = lazy(() => import("../pages/Dashboard/Admin/Analytics/Analytics"));
+const Overview = lazy(() => import("../pages/Dashboard/Shared/Overview/Overview"));
+const CategoriesManagement = lazy(() => import("../pages/Dashboard/Admin/Categories/CategoriesManagement"));
+const Blog = lazy(() => import("../pages/Blog/Blog"));
+const Support = lazy(() => import("../pages/Support/Support"));
 
 export const router = createBrowserRouter([
     {
@@ -34,9 +42,11 @@ export const router = createBrowserRouter([
             { index: true, element: <Home /> },
             { path: "about", element: <About /> },
             { path: "contact", element: <Contact /> },
-            { path: "tuitions", element: <PrivateRoute><TuitionsListing /></PrivateRoute> },
-            { path: "tuitions/:id", element: <PrivateRoute><TuitionDetails /></PrivateRoute> },
-            { path: "tutors", element: <PrivateRoute><TutorsListing /></PrivateRoute> }
+            { path: "tuitions", element: <TuitionsListing />},
+            { path: "tuitions/:id", element: <TuitionDetails /> },
+            { path: "tutors", element: <TutorsListing />},
+            { path: "blog", element: <Blog /> },
+            { path: "support", element: <Support /> }
         ]
     },
     {
@@ -60,7 +70,7 @@ export const router = createBrowserRouter([
         ),
         errorElement: <ErrorPage />,
         children: [
-            { index: true, element: <Profile /> },
+            { index: true, element: <Overview /> },
             { path: "profile", element: <Profile /> },
             { path: "my-tuitions", element: <PrivateRoute requiredRole="student"><MyTuitions /></PrivateRoute> },
             { path: "post-tuition", element: <PrivateRoute requiredRole="student"><PostTuition /></PrivateRoute> },
@@ -72,7 +82,8 @@ export const router = createBrowserRouter([
             { path: "payment-success", element: <PaymentSuccess /> },
             { path: "users", element: <PrivateRoute requiredRole="admin"><UserManagement /></PrivateRoute> },
             { path: "tuitions", element: <PrivateRoute requiredRole="admin"><TuitionManagement /></PrivateRoute> },
-            { path: "analytics", element: <PrivateRoute requiredRole="admin"><Analytics /></PrivateRoute> }
+            { path: "analytics", element: <PrivateRoute requiredRole="admin"><Analytics /></PrivateRoute> },
+            { path: "categories", element: <PrivateRoute requiredRole="admin"><CategoriesManagement /></PrivateRoute> }
         ]
     }
 ]);

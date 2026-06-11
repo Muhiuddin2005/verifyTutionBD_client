@@ -1,52 +1,65 @@
 import Logo from '../../../components/Logo/Logo';
 import { Link } from 'react-router';
-import { FaFacebook, FaLinkedin, FaYoutube } from 'react-icons/fa6';
+import { FaFacebook, FaLinkedin, FaYoutube, FaTwitter } from 'react-icons/fa';
 import { FaEnvelope, FaPhoneAlt, FaMapMarkerAlt } from 'react-icons/fa';
 
 const Footer = () => {
     return (
-        <footer className="bg-base-200 text-base-content mt-24">
-            <div className="footer max-w-7xl mx-auto p-10 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                <aside>
+        <footer className="bg-base-200 text-base-content mt-24 border-t border-base-300">
+            <div className="footer max-w-7xl mx-auto p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <aside className="space-y-4">
                     <Logo />
-                    <p className="mt-4 text-sm leading-relaxed">
+                    <p className="text-sm leading-relaxed text-base-content/75">
                         verifyTutionBD is a reliable platform connecting students with qualified tutors. We ensure quality education and a seamless experience for both learners and educators.
                     </p>
                 </aside>
                 
-                <nav>
-                    <h6 className="footer-title">Quick Links</h6>
-                    <Link to="/tuitions" className="link link-hover">Browse Tuitions</Link>
-                    <Link to="/tutors" className="link link-hover">Find Tutors</Link>
-                    <Link to="/about" className="link link-hover">About Us</Link>
-                    <Link to="/contact" className="link link-hover">Contact</Link>
+                <nav className="flex flex-col gap-2">
+                    <h6 className="footer-title font-extrabold text-primary opacity-100">Quick Links</h6>
+                    <Link to="/tuitions" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">Explore Tuitions</Link>
+                    <Link to="/tutors" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">Find Tutors</Link>
+                    <Link to="/blog" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">Blog Insights</Link>
+                    <Link to="/support" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">Help & Support</Link>
+                    <Link to="/about" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">About Us</Link>
+                    <Link to="/contact" className="link link-hover text-sm text-base-content/80 hover:text-primary transition-colors">Contact Us</Link>
                 </nav>
                 
-                <nav>
-                    <h6 className="footer-title">Contact Info</h6>
-                    <a className="flex items-center gap-2 mb-2"><FaPhoneAlt className="text-primary"/> +880 1234-567890</a>
-                    <a className="flex items-center gap-2 mb-2"><FaEnvelope className="text-primary"/> support@etuitionbd.com</a>
-                    <a className="flex items-center gap-2"><FaMapMarkerAlt className="text-primary"/> Dhaka, Bangladesh</a>
+                <nav className="flex flex-col gap-2">
+                    <h6 className="footer-title font-extrabold text-primary opacity-100">Contact Info</h6>
+                    <a href="tel:+8801234567890" className="flex items-center gap-2.5 text-sm text-base-content/80 hover:text-primary transition-colors">
+                        <FaPhoneAlt className="text-primary"/> +880 1234-567890
+                    </a>
+                    <a href="mailto:support@verifytutionbd.com" className="flex items-center gap-2.5 text-sm text-base-content/80 hover:text-primary transition-colors">
+                        <FaEnvelope className="text-primary"/> support@verifytutionbd.com
+                    </a>
+                    <span className="flex items-center gap-2.5 text-sm text-base-content/80">
+                        <FaMapMarkerAlt className="text-primary"/> Dhaka, Bangladesh
+                    </span>
                 </nav>
 
-                <nav>
-                    <h6 className="footer-title">Social Media</h6>
-                    <div className="grid grid-flow-col gap-4">
-                        <a href="#" className="hover:text-primary transition-colors">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 1200 1227">
-                                <path d="M714.163 519.284L1160.89 0H1055.03L667.137 450.887L357.328 0H0L468.492 681.821L0 1226.37H105.866L515.491 750.218L842.672 1226.37H1200L714.137 519.284H714.163ZM569.165 687.828L521.697 619.934L144.011 79.6944H306.615L611.412 515.685L658.88 583.579L1055.08 1150.3H892.476L569.165 687.854V687.828Z" />
-                            </svg>
+                <nav className="flex flex-col gap-3">
+                    <h6 className="footer-title font-extrabold text-primary opacity-100">Social Media</h6>
+                    <p className="text-xs text-base-content/60 leading-relaxed">Follow us on our channels to get regular updates and announcements.</p>
+                    <div className="flex items-center gap-4 mt-1">
+                        <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="text-xl text-base-content/70 hover:text-primary transition-colors" aria-label="Follow us on Twitter">
+                            <FaTwitter />
                         </a>
-                        <a href="#" className="text-2xl hover:text-primary transition-colors"><FaFacebook /></a>
-                        <a href="#" className="text-2xl hover:text-primary transition-colors"><FaLinkedin /></a>
-                        <a href="#" className="text-2xl hover:text-primary transition-colors"><FaYoutube /></a>
+                        <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="text-xl text-base-content/70 hover:text-primary transition-colors" aria-label="Follow us on Facebook">
+                            <FaFacebook />
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="text-xl text-base-content/70 hover:text-primary transition-colors" aria-label="Follow us on LinkedIn">
+                            <FaLinkedin />
+                        </a>
+                        <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="text-xl text-base-content/70 hover:text-primary transition-colors" aria-label="Follow us on YouTube">
+                            <FaYoutube />
+                        </a>
                     </div>
                 </nav>
             </div>
             
-            <div className="footer footer-center p-4 bg-base-300 text-base-content border-t border-base-content/10">
+            <div className="footer footer-center p-6 bg-base-300 text-base-content/70 border-t border-base-content/5">
                 <aside>
-                    <p>Copyright © {new Date().getFullYear()} - All rights reserved by verifyTutionBD Ltd.</p>
+                    <p className="text-xs">Copyright © {new Date().getFullYear()} - All rights reserved by verifyTutionBD Ltd.</p>
                 </aside>
             </div>
         </footer>

@@ -1,21 +1,43 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { tuitionSchema } from '../../../../utils/validationSchemas';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../../hooks/useAxiosSecure';
+import Modal from '../../../../components/ui/Modal';
+import Input from '../../../../components/ui/Input';
+import Button from '../../../../components/ui/Button';
 
 const EditTuitionModal = ({ tuition, onClose, onSave }) => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { register, handleSubmit, reset, formState: { errors, isSubmitting } } = useForm({
+        resolver: zodResolver(tuitionSchema),
+        mode: "onChange"
+    });
     const axiosSecure = useAxiosSecure();
 
     useEffect(() => {
         if (tuition) {
-            reset(tuition);
+            reset({
+                title: tuition.title,
+                subject: tuition.subject,
+                classLevel: tuition.classLevel,
+                location: tuition.location,
+                budget: tuition.budget,
+                description: tuition.description
+            });
         }
     }, [tuition, reset]);
 
     const onSubmit = async (data) => {
         try {
-            const updatedTuition = { ...data, budget: parseFloat(data.budget) };
+            const updatedTuition = {
+                title: data.title,
+                subject: data.subject,
+                classLevel: data.classLevel,
+                location: data.location,
+                budget: data.budget,
+                description: data.description
+            };
             const res = await axiosSecure.patch(`/tuitions/${tuition._id}`, updatedTuition);
             if (res.data.modifiedCount > 0) {
                 Swal.fire('Updated!', 'Tuition details updated successfully.', 'success');
@@ -23,91 +45,127 @@ const EditTuitionModal = ({ tuition, onClose, onSave }) => {
                 onClose();
             } else {
                 Swal.fire('No Changes', 'No changes were made to the tuition.', 'info');
+                onClose();
             }
         } catch (error) {
             console.error('Error updating tuition:', error);
-            Swal.fire('Error!', 'Failed to update tuition. Please try again.', 'error');
+            Swal.fire('Error!', error.response?.data?.message || 'Failed to update tuition. Please try again.', 'error');
         }
     };
 
+    const modalFooter = (
+        <>
+            <Button
+                variant="outline"
+                onClick={onClose}
+                disabled={isSubmitting}
+            >
+                Cancel
+            </Button>
+            <Button
+                type="submit"
+                isLoading={isSubmitting}
+                onClick={handleSubmit(onSubmit)}
+            >
+                Save Changes
+            </Button>
+        </>
+    );
+
     return (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-base-100 p-8 rounded-lg shadow-xl w-full max-w-lg mx-4">
-                <h2 className="text-2xl font-bold mb-6 text-primary">Edit Tuition</h2>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Title</span></label>
-                        <input
-                            type="text"
-                            placeholder="Tuition Title"
-                            className="input input-bordered w-full"
-                            {...register('title', { required: 'Title is required' })}
-                        />
-                        {errors.title && <span className="text-red-500 text-sm">{errors.title.message}</span>}
-                    </div>
+        <Modal
+            isOpen={!!tuition}
+            onClose={onClose}
+            title="Edit Tuition Requirement"
+            footer={modalFooter}
+            size="md"
+        >
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <Input
+                    label="Tuition Title"
+                    type="text"
+                    placeholder="Tuition Title"
+                    error={errors.title?.message}
+                    disabled={isSubmitting}
+                    required
+                    {...register('title')}
+                />
 
-                    <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Subject</span></label>
-                        <input
-                            type="text"
-                            placeholder="Subject (e.g., Math, Physics)"
-                            className="input input-bordered w-full"
-                            {...register('subject', { required: 'Subject is required' })}
-                        />
-                        {errors.subject && <span className="text-red-500 text-sm">{errors.subject.message}</span>}
-                    </div>
+                <Input
+                    label="Subject"
+                    type="text"
+                    placeholder="Subject (e.g., Math, Physics)"
+                    error={errors.subject?.message}
+                    disabled={isSubmitting}
+                    required
+                    {...register('subject')}
+                />
 
-                    <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Class Level</span></label>
-                        <input
-                            type="text"
-                            placeholder="Class Level (e.g., 9-10, A-Level)"
-                            className="input input-bordered w-full"
-                            {...register('classLevel', { required: 'Class Level is required' })}
-                        />
-                        {errors.classLevel && <span className="text-red-500 text-sm">{errors.classLevel.message}</span>}
-                    </div>
+                <div className="form-control w-full">
+                    <label className="label pb-1">
+                        <span className="label-text font-bold text-base-content/80 text-sm">
+                            Class Level <span className="text-error font-bold">*</span>
+                        </span>
+                    </label>
+                    <select
+                        className={`select w-full bg-base-200/50 border-base-300 rounded-xl transition-all duration-300 shadow-sm focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 ${errors.classLevel ? 'border-error ring-2 ring-error/10 bg-error/5' : ''}`}
+                        disabled={isSubmitting}
+                        {...register("classLevel")}
+                    >
+                        <option value="" disabled>Select Class Level</option>
+                        <option value="Primary (1-5)">Primary (1-5)</option>
+                        <option value="JSC (6-8)">Middle School (6-8)</option>
+                        <option value="SSC (9-10)">SSC (9-10)</option>
+                        <option value="HSC (11-12)">HSC (11-12)</option>
+                        <option value="Admission">University Admission</option>
+                    </select>
+                    {errors.classLevel && (
+                        <p className="text-error text-xs font-semibold mt-1.5 flex items-center gap-1">
+                            {errors.classLevel.message}
+                        </p>
+                    )}
+                </div>
 
-                    <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Location</span></label>
-                        <input
-                            type="text"
-                            placeholder="Location (e.g., Dhaka, Chittagong)"
-                            className="input input-bordered w-full"
-                            {...register('location', { required: 'Location is required' })}
-                        />
-                        {errors.location && <span className="text-red-500 text-sm">{errors.location.message}</span>}
-                    </div>
+                <Input
+                    label="Location"
+                    type="text"
+                    placeholder="Location (e.g., Dhaka, Chittagong)"
+                    error={errors.location?.message}
+                    disabled={isSubmitting}
+                    required
+                    {...register('location')}
+                />
 
-                    <div className="form-control mb-4">
-                        <label className="label"><span className="label-text">Budget (BDT)</span></label>
-                        <input
-                            type="number"
-                            step="0.01"
-                            placeholder="Budget (e.g., 5000)"
-                            className="input input-bordered w-full"
-                            {...register('budget', { required: 'Budget is required', min: { value: 0, message: 'Budget must be positive' } })}
-                        />
-                        {errors.budget && <span className="text-red-500 text-sm">{errors.budget.message}</span>}
-                    </div>
+                <Input
+                    label="Budget (BDT / month)"
+                    type="number"
+                    placeholder="Budget (e.g., 5000)"
+                    error={errors.budget?.message}
+                    disabled={isSubmitting}
+                    required
+                    {...register('budget')}
+                />
 
-                    <div className="form-control mb-6">
-                        <label className="label"><span className="label-text">Description</span></label>
-                        <textarea
-                            placeholder="Provide a detailed description of the tuition requirements."
-                            className="textarea textarea-bordered h-24 w-full"
-                            {...register('description', { required: 'Description is required' })}
-                        ></textarea>
-                        {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
-                    </div>
-
-                    <div className="flex justify-end gap-4">
-                        <button type="button" onClick={onClose} className="btn btn-ghost">Cancel</button>
-                        <button type="submit" className="btn btn-primary text-white">Save Changes</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+                <div className="form-control w-full">
+                    <label className="label pb-1">
+                      <span className="label-text font-bold text-base-content/80 text-sm">
+                        Detailed Requirements <span className="text-error font-bold">*</span>
+                      </span>
+                    </label>
+                    <textarea
+                        placeholder="Provide a detailed description of the tuition requirements."
+                        className={`textarea w-full min-h-[100px] bg-base-200/50 border-base-300 rounded-xl transition-all duration-300 shadow-sm focus:outline-none focus:border-primary focus:ring-4 focus:ring-primary/20 ${errors.description ? 'border-error ring-2 ring-error/10 bg-error/5' : ''}`}
+                        disabled={isSubmitting}
+                        {...register("description")}
+                    />
+                    {errors.description && (
+                        <p className="text-error text-xs font-semibold mt-1.5 flex items-center gap-1">
+                            {errors.description.message}
+                        </p>
+                    )}
+                </div>
+            </form>
+        </Modal>
     );
 };
 

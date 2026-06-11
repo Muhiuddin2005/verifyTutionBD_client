@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const images = [
@@ -34,16 +34,16 @@ const NewBanner = () => {
   const [[page, direction], setPage] = useState([0, 0]);
   const imageIndex = Math.abs(page % images.length);
 
-  const paginate = (newDirection) => {
-    setPage([page + newDirection, newDirection]);
-  };
+  const paginate = useCallback((newDirection) => {
+    setPage((prev) => [prev[0] + newDirection, newDirection]);
+  }, []);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       paginate(1);
     }, 5000);
     return () => clearTimeout(timer);
-  }, [page]);
+  }, [page, paginate]);
 
   return (
     <div className="relative w-full h-[70vh] overflow-hidden bg-gray-900 group">

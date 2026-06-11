@@ -23,11 +23,17 @@ const NavBar = () => {
             .catch(error => console.log(error));
     };
 
-    const links = (
+    const links = user ? (
         <>
-            <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/tuitions">Tuitions</NavLink></li>
-            <li><NavLink to="/tutors">Tutors</NavLink></li>
+            <li><NavLink to="/" end>Home</NavLink></li>
+            <li><NavLink to="/tuitions">Explore</NavLink></li>
+            <li><NavLink to="/dashboard">Dashboard</NavLink></li>
+            <li><NavLink to="/blog">Blog</NavLink></li>
+        </>
+    ) : (
+        <>
+            <li><NavLink to="/" end>Home</NavLink></li>
+            <li><NavLink to="/tuitions">Explore</NavLink></li>
             <li><NavLink to="/about">About</NavLink></li>
             <li><NavLink to="/contact">Contact</NavLink></li>
         </>
@@ -38,12 +44,12 @@ const NavBar = () => {
             <div className="navbar max-w-7xl mx-auto px-4 lg:px-8 h-20">
                 <div className="navbar-start">
                     <div className="dropdown">
-                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-0 mr-4">
+                        <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden p-0 mr-4" aria-label="Open Menu">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
                             </svg>
                         </div>
-                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-4 shadow-2xl bg-base-100 rounded-box w-64 border border-base-content/10 gap-2">
+                        <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[100] p-4 shadow-2xl bg-base-100 rounded-box w-64 border border-base-content/10 gap-2">
                             {links}
                         </ul>
                     </div>
@@ -69,9 +75,9 @@ const NavBar = () => {
 
                     {user ? (
                         <div className="dropdown dropdown-end">
-                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar border-2 border-primary ring ring-primary ring-offset-base-100 ring-offset-2">
+                            <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar border-2 border-primary ring ring-primary ring-offset-base-100 ring-offset-2" aria-label="User profile menu">
                                 <div className="w-10 rounded-full">
-                                    <img alt="User profile" src={user?.photoURL || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} />
+                                    <img alt="User profile" src={user?.photoURL || "https://i.ibb.co/4pDNDk1/avatar.png"} />
                                 </div>
                             </div>
                             <ul tabIndex={0} className="mt-3 z-[100] p-2 shadow-2xl menu menu-sm dropdown-content bg-base-100 rounded-box w-52 border border-base-content/10">
@@ -80,15 +86,15 @@ const NavBar = () => {
                                     <p className="text-xs opacity-60 truncate">{user?.email}</p>
                                 </li>
                                 <li><Link to="/dashboard" className="font-semibold">Dashboard</Link></li>
-                                <li><Link to="/dashboard/profile" className="font-semibold">Profile</Link></li>
+                                <li><Link to="/dashboard/profile" className="font-semibold">Profile Settings</Link></li>
                                 <li><button onClick={handleLogOut} className="text-error font-semibold">Logout</button></li>
                             </ul>
                         </div>
                     ) : (
-                        <>
-                            <Link className='btn btn-ghost' to="/auth/login">Login</Link>
-                            <Link className='btn btn-primary text-secondary' to="/auth/register">Register</Link>
-                        </>
+                        <div className="flex items-center gap-2">
+                            <Link className='btn btn-ghost btn-sm sm:btn-md' to="/auth/login">Login</Link>
+                            <Link className='btn btn-primary text-white btn-sm sm:btn-md' to="/auth/register">Register</Link>
+                        </div>
                     )}
                 </div>
             </div>
