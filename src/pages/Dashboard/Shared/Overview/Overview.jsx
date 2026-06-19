@@ -5,7 +5,8 @@ import {
     BarChart, Bar, 
     PieChart, Pie, Cell, 
     XAxis, YAxis, Tooltip, 
-    ResponsiveContainer, CartesianGrid 
+    ResponsiveContainer, CartesianGrid,
+    LineChart, Line
 } from 'recharts';
 import { FiUsers, FiBookOpen, FiFileText, FiDollarSign, FiLayers } from 'react-icons/fi';
 import useAuth from '../../../../hooks/useAuth';
@@ -194,27 +195,65 @@ const Overview = () => {
     // Render Charts based on Role
     const renderAdminCharts = () => (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-8">
-            {/* Revenue Area Chart */}
-            <div className="bg-base-100 p-6 rounded-2xl shadow-md border border-base-200 h-[400px] flex flex-col justify-between">
-                <div>
-                    <h3 className="text-xl font-bold text-base-content">Revenue Growth</h3>
-                    <p className="text-xs text-base-content/60 mb-4">Track platform revenue generated monthly</p>
+            {/* Revenue Growth Area Chart */}
+            <div className="bg-base-100 p-6 rounded-3xl shadow-lg border border-base-200/60 hover:shadow-xl transition-all duration-300 h-[400px] flex flex-col justify-between group">
+                <div className="flex justify-between items-start">
+                    <div>
+                        <span className="text-[10px] font-bold tracking-widest text-secondary uppercase bg-secondary/10 px-2.5 py-1 rounded-full">Financial Overview</span>
+                        <h3 className="text-xl font-extrabold text-base-content mt-1.5 group-hover:text-primary transition-colors duration-300">Revenue Growth</h3>
+                        <p className="text-xs text-base-content/60 mt-0.5">Track platform revenue generated monthly</p>
+                    </div>
+                    <div className="flex flex-col items-end">
+                        <span className="text-xs font-semibold text-base-content/50">Total Revenue</span>
+                        <span className="text-lg font-black text-secondary">৳{stats.revenue || 0}</span>
+                    </div>
                 </div>
-                <div className="flex-grow h-72">
+                <div className="flex-grow h-64 mt-4">
                     <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={charts.revenue} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                            <defs>
-                                <linearGradient id="revenueGrad" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.4}/>
-                                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
-                                </linearGradient>
-                            </defs>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E5E7EB" />
-                            <XAxis dataKey="name" tick={{ fill: '#888888', fontSize: 12 }} axisLine={false} tickLine={false} />
-                            <YAxis tick={{ fill: '#888888', fontSize: 12 }} axisLine={false} tickLine={false} tickFormatter={(v) => `৳${v}`} />
-                            <Tooltip contentStyle={{ borderRadius: 12, border: 'none', boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)' }} />
-                            <Area type="monotone" dataKey="total" stroke="#10B981" strokeWidth={3} fillOpacity={1} fill="url(#revenueGrad)" />
-                        </AreaChart>
+                        <LineChart data={charts.revenue} margin={{ top: 15, right: 5, left: 5, bottom: 0 }}>
+                            <CartesianGrid strokeDasharray="4 4" vertical={false} stroke="currentColor" opacity={0.08} />
+                            <XAxis 
+                                dataKey="name" 
+                                tick={{ fill: 'currentColor', opacity: 0.6, fontSize: 11, fontWeight: 600, fontFamily: 'Urbanist, sans-serif' }} 
+                                axisLine={false} 
+                                tickLine={false} 
+                                dy={8}
+                            />
+                            <YAxis 
+                                tick={{ fill: 'currentColor', opacity: 0.6, fontSize: 11, fontWeight: 600, fontFamily: 'Urbanist, sans-serif' }} 
+                                axisLine={false} 
+                                tickLine={false} 
+                                tickFormatter={(v) => `৳${v}`}
+                            />
+                            <Tooltip 
+                                cursor={{ stroke: 'var(--color-secondary, #4DB04F)', strokeWidth: 1.5, strokeDasharray: '3 3', opacity: 0.5 }}
+                                content={({ active, payload, label }) => {
+                                    if (active && payload && payload.length) {
+                                        return (
+                                            <div className="bg-base-100/90 backdrop-blur-md border border-base-content/10 p-3 rounded-2xl shadow-xl flex flex-col gap-1 transition-all duration-300">
+                                                <p className="text-[10px] font-extrabold text-base-content/50 uppercase tracking-wider">{label}</p>
+                                                <div className="flex items-center gap-1.5">
+                                                    <div className="w-2 h-2 rounded-full bg-secondary" />
+                                                    <p className="text-base font-black text-base-content">
+                                                        ৳{payload[0].value.toLocaleString()}
+                                                    </p>
+                                                </div>
+                                                <span className="text-[9px] text-success font-bold">↑ Active growth</span>
+                                            </div>
+                                        );
+                                    }
+                                    return null;
+                                }}
+                            />
+                            <Line 
+                                type="monotone" 
+                                dataKey="total" 
+                                stroke="var(--color-secondary, #4DB04F)" 
+                                strokeWidth={4} 
+                                dot={{ r: 4, stroke: 'var(--color-secondary, #4DB04F)', strokeWidth: 1, fill: '#fff' }}
+                                activeDot={{ r: 7, stroke: '#fff', strokeWidth: 2, fill: 'var(--color-secondary, #4DB04F)' }}
+                            />
+                        </LineChart>
                     </ResponsiveContainer>
                 </div>
             </div>
